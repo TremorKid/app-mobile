@@ -17,9 +17,9 @@ public class MenuLogic : MonoBehaviour
         
     }
 
-    public void Play()
+    public void Play(string name)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(name);
     }
 
     public void Quit()

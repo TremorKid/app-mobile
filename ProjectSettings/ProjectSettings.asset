@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: app-mobile
+  productName: TremorKid
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -161,7 +161,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.DefaultCompany.appmobile
+    Android: com.DefaultCompany.TremorKid
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -848,11 +848,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: c2450b59-6558-4ba6-9be1-8ae9b09a9515
+  cloudProjectId: 322c17f0-779b-48aa-81d6-c6a4547728ab
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: app-mobile
-  organizationId: misterpaandaa
+  projectName: My project
+  organizationId: unity_ca23b9ac67e94b383bd5
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
