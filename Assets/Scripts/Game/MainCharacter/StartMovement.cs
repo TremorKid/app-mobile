@@ -16,6 +16,14 @@ public class StartMovement : MonoBehaviour
 
     void Update()
     {
-
+		ControlAnimationPartameters();
+    }
+	
+	void ControlAnimationPartameters()
+	{
+		if (animator.GetCurrentAnimatorStateInfo(0).IsName("StartMovement") && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !animator.IsInTransition(0))
+		{
+			animator.SetInteger("Actions", 1);
+		}
     }
 }
