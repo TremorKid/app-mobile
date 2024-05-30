@@ -956,7 +956,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 207616569}
         m_TargetAssemblyTypeName: PauseMenuLogic, Assembly-CSharp
         m_MethodName: BackMainMenu
         m_Mode: 1
