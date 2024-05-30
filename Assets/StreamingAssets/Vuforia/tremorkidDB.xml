@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
-    <ImageTarget name="meetpoint" size="20.100000 28.895126" />
+    <ImageTarget name="meetpoint" size="0.210000 0.301889" />
     <ImageTarget name="corner" size="0.210000 0.301889" />
     <ImageTarget name="table" size="0.210000 0.301889" />
     <ImageTarget name="column" size="0.210000 0.301889" />
