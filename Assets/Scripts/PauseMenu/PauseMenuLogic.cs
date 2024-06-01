@@ -9,9 +9,15 @@ public class PauseMenuLogic : MonoBehaviour
     {
         Time.timeScale = 0f;
     }
+    
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+    }
 
     public void BackMainMenu()
     {
+        Resume();
         SceneManager.LoadScene(0);
     }
 }
