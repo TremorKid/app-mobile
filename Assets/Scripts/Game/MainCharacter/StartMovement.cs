@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class StartMovement : MonoBehaviour
@@ -7,6 +8,7 @@ public class StartMovement : MonoBehaviour
     public Animator animator; // Referencia al Animator
     public int layerIndex1;
     public int layerIndex2;
+    public List<Button> buttons;
     public AudioController audioController;
     public AudioClip birdSongSoundEffectClip;
     //public AudioClip displacementSoundEffectClip;
@@ -15,6 +17,7 @@ public class StartMovement : MonoBehaviour
     private AudioSource audioSource;
     private float currentTime = 0f;
     private short contAudioReproduce = 0;
+    public short contInteractive = 0;
 
 
     void Start()
@@ -85,24 +88,36 @@ public class StartMovement : MonoBehaviour
 	{
 		currentTime = audioSource.time;
 
+		Debug.Log(currentTime);
+
 		// Intervalo del segundo 0 al 10
-		if (audioSource.clip == Learning_Guide_Escene1 && currentTime >= 0 && currentTime <= 10)
+		//if (audioSource.clip == Learning_Guide_Escene1 && currentTime >= 0 && currentTime <= 10)
+		//{
+			//if (currentTime > 5 && currentTime < 6)
+			//{
+			//	audioController.PauseAudioForSeconds(5f);
+			//}
+		//}
+
+		if (currentTime >= 19 && currentTime < 20 && contInteractive == 0)
 		{
-			if (currentTime > 5 && currentTime < 6)
-			{
-				audioController.PauseAudioForSeconds(5f);
-			}
-			Debug.Log("Intervalo 0-10 segundos");
+			audioSource.Pause();
+			buttons[0].gameObject.SetActive(true);
+			contInteractive++;
 		}
-		// Intervalo del segundo 11 al 20
-		else if (audioSource.clip == Learning_Guide_Escene1 && currentTime > 10 && currentTime <= 20)
+
+		if (currentTime >= 36 && currentTime < 37 && contInteractive == 1)
 		{
-			Debug.Log("Intervalo 11-20 segundos");
+			audioSource.Pause();
+			buttons[1].gameObject.SetActive(true);
+			contInteractive++;
 		}
-		// Intervalo del segundo 21 al 40
-		else if (audioSource.clip == Learning_Guide_Escene1 && currentTime > 20 && currentTime <= 40)
-		{
-			Debug.Log("Intervalo 21-40 segundos");
-		}
+			//Debug.Log("Intervalo 21-40 segundos");
+		
+	}
+
+	public void UnPauseAudioSource()
+	{
+		audioSource.UnPause();
 	}
 }
