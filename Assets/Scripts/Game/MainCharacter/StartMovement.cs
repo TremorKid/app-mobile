@@ -5,52 +5,71 @@ using UnityEngine;
 
 public class StartMovement : MonoBehaviour
 {
-    public Animator animator; // Referencia al Animator
-    public int layerIndex1;
-    public int layerIndex2;
-    public List<Button> buttons;
-    public AudioController audioController;
-    public AudioClip birdSongSoundEffectClip;
-    //public AudioClip displacementSoundEffectClip;
-    public AudioClip Learning_Guide_Escene1;
-    public AudioClip Prueba;
-    private AudioSource audioSource;
-    private float currentTime = 0f;
-    private short contAudioReproduce = 0;
-    public short contInteractive = 0;
-
-
-    void Start()
-    {
-		//Sound
-	    audioSource = GetComponent<AudioSource>();
-	    InvokeRepeating("CheckAudioTime", 0f, 1f);
-	    //Animation
-        animator.SetLayerWeight(layerIndex1, 1f);
-        animator.SetLayerWeight(layerIndex2, 2f);
-    }
-
-    void Update()
-    {
-		ControlAnimationPartameters();
-    }
-
-    void AudioTalkController()
-    {
-	    if (audioSource.clip == Learning_Guide_Escene1 && audioSource.isPlaying)
-	    {
-		    animator.SetInteger("Actions", 1);
-	    }
-    }
-
-    void InitialMovementClipPlay()
-    {
-	    audioSource.clip = birdSongSoundEffectClip;
-	    audioSource.Play();
-    }
-    
-
+	public Animator animator; // Referencia al Animator
+	public int layerIndex1;
+	public int layerIndex2;
+	public GameObject guideObject;
+	public List<Button> buttons;
+	public List<AudioClip> guideLearning;
+	private Dictionary<string, AudioClip> guideLearningImagesDictionary;
+	public AudioClip birdSongSoundEffectClip;
+	private AudioSource audioSource;
+	public List<GameObject> modelList;
+	private Dictionary<string, GameObject> modelDictionary;
+	private float currentTime = 0f;
+	private short contAudioReproduce = 0;
+	private short contInteractive = 0;
+	private short contColumn = 0;
+	private short contFirstAidKit = 0;
 	
+	void Start()
+	{
+		//Sound
+		audioSource = GetComponent<AudioSource>();
+		InvokeRepeating("CheckAudioTime", 0f, 1f);
+
+		guideLearningImagesDictionary = new Dictionary<string, AudioClip>();
+		foreach (AudioClip clip in guideLearning)
+		{
+			guideLearningImagesDictionary[clip.name] = clip;
+		}
+
+		//Animation
+		animator.SetLayerWeight(layerIndex1, 1f);
+		animator.SetLayerWeight(layerIndex2, 2f);
+		
+		//Model
+		modelDictionary = new Dictionary<string, GameObject>();
+		foreach (GameObject model in modelList)
+		{
+			if (model != null)
+			{
+				modelDictionary[model.name] = model;
+			}
+		}
+	}
+
+	void Update()
+	{
+		ControlAnimationPartameters();
+	}
+
+	void InitialMovementClipPlay()
+	{
+		audioSource.clip = birdSongSoundEffectClip;
+		audioSource.Play();
+	}
+
+	// NO TERMINADA: PARA POSICIONAR AL GUIA AL COSTADO DE LA IMAGEN ESCANEADA 
+	void GuidePositionModel()
+	{
+		if (contColumn == 1)
+		{
+			Debug.Log("Conteo de columna: 1");
+		}
+	}
+
+	//FUNCIÓN DE CONTROL DE ANIMACIONES Y AUDIO PARA LA REPRODUCCIÓN DE AUDIO Y ANIMACIONES EN LA ESCENA
 	void ControlAnimationPartameters()
 	{
 		//Animation StartMovement Start
@@ -60,44 +79,59 @@ public class StartMovement : MonoBehaviour
 //
 //
 		//}
-		
+
 		//Animation StartMovement End
 		if (contAudioReproduce == 0)
 		{
-			if (animator.GetCurrentAnimatorStateInfo(0).IsName("StartMovement") && 
-			    animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && 
+			if (animator.GetCurrentAnimatorStateInfo(0).IsName("StartMovement") &&
+			    animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
 			    !animator.IsInTransition(0))
 			{
 				//Audio
 				audioSource.Pause();
-				audioSource.clip = Learning_Guide_Escene1;
+				SetAudioClipByName("Guide_Start_Learning");
 				contAudioReproduce++;
 				//Animation
 				animator.SetInteger("Actions", 1);
 				audioSource.Play();
-			}	
+			}
 		}
-    }
 
-	//void ControlAudioParameters()
-	//{
-	//	
-	//}
-	
+		if (contAudioReproduce == 1)
+		{
+			//CUANDO EL AUDIO INICIAL DEL GUIA TERMINA, DA PASO A LA INTERACTIVIDAD DE LAS IMAGENES, POR ELLO SE ABELITIA CON SETACTIVE
+			if (audioSource.clip.name == "Guide_Start_Learning" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
+				{
+					if (aux.Value.name == "Column" || aux.Value.name == "FirstAidKit")
+					{
+						aux.Value.SetActive(true);
+					}
+				}
+			}
+			
+			//CUANDO ESCANEA LA IMAGEN DE LA COLUMNA, Y TERMINA SU AUDIO, SE HABILITA TODOS LOS MODELOS
+			//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
+			if (audioSource.clip.name == "Guide_Column" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false);
+			}
+			
+			if (audioSource.clip.name == "Guide_FirstAidKit" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false);
+			}
+		}
+		
+	}
+
+	//FUNCIÓN PARA CONTROLAR EL TIEMPO DE CADA AUDIO Y COLOCAR LOS BOTONES AZULES DE INTERACTIVIDAD
 	void CheckAudioTime()
 	{
 		currentTime = audioSource.time;
 
 		Debug.Log(currentTime);
-
-		// Intervalo del segundo 0 al 10
-		//if (audioSource.clip == Learning_Guide_Escene1 && currentTime >= 0 && currentTime <= 10)
-		//{
-			//if (currentTime > 5 && currentTime < 6)
-			//{
-			//	audioController.PauseAudioForSeconds(5f);
-			//}
-		//}
 
 		if (currentTime >= 19 && currentTime < 20 && contInteractive == 0)
 		{
@@ -112,12 +146,58 @@ public class StartMovement : MonoBehaviour
 			buttons[1].gameObject.SetActive(true);
 			contInteractive++;
 		}
-			//Debug.Log("Intervalo 21-40 segundos");
-		
+
 	}
 
 	public void UnPauseAudioSource()
 	{
 		audioSource.UnPause();
+	}
+
+	// ASIGNAR UN AUDIOSOURCE DE LA LISTA DE AUDIOCLIP DEL GUIA
+	public void SetAudioClipByName(string clipName)
+	{
+		if (guideLearningImagesDictionary.ContainsKey(clipName))
+		{
+			audioSource.clip = guideLearningImagesDictionary[clipName];
+			Debug.Log($"AudioClip '{clipName}' asignado al AudioSource.");
+		}
+		else
+		{
+			Debug.LogWarning($"AudioClip con el nombre '{clipName}' no encontrado.");
+		}
+	}
+
+	// HABILITAR LA FUNCIÓN DE TODOS LOS MODELOS DE LAS IMAGENES PARA ESCANEAR
+	void SetActiveModel(bool flag)
+	{
+		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
+		{
+			if (aux.Value.name == "Column" || aux.Value.name == "FirstAidKit")
+			{
+				aux.Value.SetActive(flag);
+			}
+		}
+	}
+
+	// CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN
+	public void IncreaseColumnImageCounter()
+	{
+		if (contColumn == 0)
+		{
+			SetAudioClipByName("Guide_Column");
+			audioSource.Play();
+			//transform.position = aux;
+			contColumn++;
+		}
+	}
+	public void IncreaseFirstAidKitImageCounter()
+	{
+		if (contFirstAidKit == 0)
+		{
+			SetAudioClipByName("Guide_FirstAidKit");
+			audioSource.Play();
+			contFirstAidKit++;
+		}
 	}
 }
