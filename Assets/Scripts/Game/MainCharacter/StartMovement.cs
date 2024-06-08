@@ -120,7 +120,7 @@ public class StartMovement : MonoBehaviour
 			
 			//CUANDO ESCANEA LA IMAGEN DE LA COLUMNA, Y TERMINA SU AUDIO, SE HABILITA TODOS LOS MODELOS
 			//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
-			if (audioSource.clip.name == "Guide_Column" && currentTime == 0 && !audioSource.isPlaying)
+			if (audioSource.clip.name == "Guide_BeamAndColumn" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				SetActiveModel(false, audioSource.clip.name);
 			}
