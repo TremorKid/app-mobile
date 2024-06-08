@@ -25,7 +25,7 @@ public class StartMovement : MonoBehaviour
 	private short contStair = 0;
 	private short contWindow = 0;
 	private short contTelevision = 0;
-	private short contBeam = 0;
+	private short contMeetingPoint = 0;
 	private short contTable = 0;
 	
 	
@@ -159,6 +159,11 @@ public class StartMovement : MonoBehaviour
 			{
 				SetActiveModel(false, audioSource.clip.name);
 			}
+			
+			if (audioSource.clip.name == "Guide_MeetingPoint" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false, audioSource.clip.name);
+			}
 		}
 		
 	}
@@ -221,7 +226,7 @@ public class StartMovement : MonoBehaviour
 	{
 		if (contColumn == 0)
 		{
-			SetAudioClipByName("Guide_Column");
+			SetAudioClipByName("Guide_BeamAndColumn");
 			audioSource.Play();
 			//transform.position = aux;
 			contColumn++;
@@ -281,13 +286,13 @@ public class StartMovement : MonoBehaviour
 			contStair++;
 		}
 	}
-	public void IncreaseBeamImageCounter()
+	public void IncreaseMeetingPointImageCounter()
 	{
-		//if (contBeam== 0)
-		//{
-		//	SetAudioClipByName("Guide_Beam");
-		//	audioSource.Play();
-		//	contBeam++;
-		//}
+		if (contMeetingPoint== 0)
+		{
+			SetAudioClipByName("Guide_MeetingPoint");
+			audioSource.Play();
+			contMeetingPoint++;
+		}
 	}
 }
