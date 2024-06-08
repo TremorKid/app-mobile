@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="Stair" size="1.000000 1.547649" />
+    <ImageTarget name="Table" size="1.000000 1.547649" />
+    <ImageTarget name="Beam" size="1.000000 1.547649" />
+    <ImageTarget name="Column" size="1.000000 1.547649" />
+    <ImageTarget name="Window" size="1.000000 1.547649" />
+    <ImageTarget name="Television" size="1.000000 1.547649" />
+    <ImageTarget name="FirstAidKit" size="1.000000 1.547649" />
+    <ImageTarget name="EmergencyBackpack" size="1.000000 1.547649" />
+    <ImageTarget name="group31" size="1.000000 1.408306" />
+    <ImageTarget name="group3" size="1.000000 1.437568" />
+  </Tracking>
+</QCARConfig>
