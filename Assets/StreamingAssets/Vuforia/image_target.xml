@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="MeetingPoint" size="1.000000 1.547649" />
     <ImageTarget name="Stair" size="1.000000 1.547649" />
     <ImageTarget name="Table" size="1.000000 1.547649" />
     <ImageTarget name="Beam" size="1.000000 1.547649" />
