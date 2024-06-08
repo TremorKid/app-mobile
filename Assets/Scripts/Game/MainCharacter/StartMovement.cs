@@ -8,7 +8,7 @@ public class StartMovement : MonoBehaviour
 	public Animator animator; // Referencia al Animator
 	public int layerIndex1;
 	public int layerIndex2;
-	public GameObject guideObject;
+	public GameObject guideMeshObject;
 	public List<Button> buttons;
 	public List<AudioClip> guideLearning;
 	private Dictionary<string, AudioClip> guideLearningImagesDictionary;
@@ -21,6 +21,13 @@ public class StartMovement : MonoBehaviour
 	private short contInteractive = 0;
 	private short contColumn = 0;
 	private short contFirstAidKit = 0;
+	private short contEmergencyBackpack = 0;
+	private short contStair = 0;
+	private short contWindow = 0;
+	private short contTelevision = 0;
+	private short contBeam = 0;
+	private short contTable = 0;
+	
 	
 	void Start()
 	{
@@ -102,25 +109,55 @@ public class StartMovement : MonoBehaviour
 			//CUANDO EL AUDIO INICIAL DEL GUIA TERMINA, DA PASO A LA INTERACTIVIDAD DE LAS IMAGENES, POR ELLO SE ABELITIA CON SETACTIVE
 			if (audioSource.clip.name == "Guide_Start_Learning" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				//gameObject.SetActive(false);
 				foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
 				{
-					if (aux.Value.name == "Column" || aux.Value.name == "FirstAidKit")
-					{
-						aux.Value.SetActive(true);
-					}
+					aux.Value.SetActive(true);
 				}
+
+				guideMeshObject.SetActive(false);
 			}
 			
 			//CUANDO ESCANEA LA IMAGEN DE LA COLUMNA, Y TERMINA SU AUDIO, SE HABILITA TODOS LOS MODELOS
 			//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
 			if (audioSource.clip.name == "Guide_Column" && currentTime == 0 && !audioSource.isPlaying)
 			{
-				SetActiveModel(false);
+				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_FirstAidKit" && currentTime == 0 && !audioSource.isPlaying)
 			{
-				SetActiveModel(false);
+				SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Guide_EmergencyBackpack" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Guide_Stair" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Guide_Table" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Guide_Television" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Guide_Window" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Guide_Beam" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				SetActiveModel(false, audioSource.clip.name);
 			}
 		}
 		
@@ -169,15 +206,14 @@ public class StartMovement : MonoBehaviour
 	}
 
 	// HABILITAR LA FUNCIÓN DE TODOS LOS MODELOS DE LAS IMAGENES PARA ESCANEAR
-	void SetActiveModel(bool flag)
+	public void SetActiveModel(bool flag, string nameModel)
 	{
 		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{
-			if (aux.Value.name == "Column" || aux.Value.name == "FirstAidKit")
-			{
-				aux.Value.SetActive(flag);
-			}
+		{ 
+			aux.Value.SetActive(true);
 		}
+
+		modelDictionary[nameModel].SetActive(flag);
 	}
 
 	// CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN
@@ -199,5 +235,59 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contFirstAidKit++;
 		}
+	}
+	public void IncreaseEmergencyBackpackImageCounter()
+	{
+		if (contEmergencyBackpack == 0)
+		{
+			SetAudioClipByName("Guide_EmergencyBackpack");
+			audioSource.Play();
+			contEmergencyBackpack++;
+		}
+	}
+	public void IncreaseWindowImageCounter()
+	{
+		if (contWindow == 0)
+		{
+			SetAudioClipByName("Guide_Window");
+			audioSource.Play();
+			contWindow++;
+		}
+	}
+	public void IncreaseTelevisionImageCounter()
+	{
+		if (contTelevision == 0)
+		{
+			SetAudioClipByName("Guide_Television");
+			audioSource.Play();
+			contTelevision++;
+		}
+	}
+	public void IncreaseTableImageCounter()
+	{
+		if (contTable == 0)
+		{
+			SetAudioClipByName("Guide_Table");
+			audioSource.Play();
+			contTable++;
+		}
+	}
+	public void IncreaseStairImageCounter()
+	{
+		if (contStair == 0)
+		{
+			SetAudioClipByName("Guide_Stair");
+			audioSource.Play();
+			contStair++;
+		}
+	}
+	public void IncreaseBeamImageCounter()
+	{
+		//if (contBeam== 0)
+		//{
+		//	SetAudioClipByName("Guide_Beam");
+		//	audioSource.Play();
+		//	contBeam++;
+		//}
 	}
 }
