@@ -2,22 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class StartMovement : MonoBehaviour
 {
-	public Animator animator; // Referencia al Animator
+	//Variables para las animaciones del personaje
+	public Animator animator; 
 	public int layerIndex1;
 	public int layerIndex2;
+	
+	//El modelado 3D del personaje
 	public GameObject guideMeshObject;
+	
+	//Question Canvas
+	public TextMeshProUGUI questionText;
+	public List<Button> yesQuestionButtonList;
+	private Dictionary<string, Button> yesQuestionButtonDirectory;
+	public Button noQuestionButton;
+	public GameObject questionCanvas;
+	
+	//Lista de botones para la interacción en InteractionCanvas
 	public List<Button> buttons;
+	
+	//Lista de audios del guía
 	public List<AudioClip> guideLearning;
 	private Dictionary<string, AudioClip> guideLearningImagesDictionary;
+	
+	//Audio de efecto al inicio de la aplicación
 	public AudioClip birdSongSoundEffectClip;
 	private AudioSource audioSource;
+	
+	//Lista de las imagenes que se escanean
 	public List<GameObject> modelList;
 	private Dictionary<string, GameObject> modelDictionary;
+	
+	//Variables para el control de audio
 	private float currentTime = 0f;
 	private short contAudioReproduce = 0;
+	
+	//Contadores para saber cuantas veces se escaneo la imagen
 	private short contInteractive = 0;
 	private short contColumn = 0;
 	private short contFirstAidKit = 0;
@@ -28,6 +51,8 @@ public class StartMovement : MonoBehaviour
 	private short contMeetingPoint = 0;
 	private short contTable = 0;
 	
+	//Condicional para saber si el audio termino
+	private bool audioFinishFlag;
 	
 	void Start()
 	{
@@ -122,46 +147,55 @@ public class StartMovement : MonoBehaviour
 			//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
 			if (audioSource.clip.name == "Guide_BeamAndColumn" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_FirstAidKit" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_EmergencyBackpack" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_Stair" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_Table" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_Television" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_Window" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_Beam" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Guide_MeetingPoint" && currentTime == 0 && !audioSource.isPlaying)
 			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 		}
@@ -226,10 +260,31 @@ public class StartMovement : MonoBehaviour
 	{
 		if (contColumn == 0)
 		{
+			audioFinishFlag = false;
 			SetAudioClipByName("Guide_BeamAndColumn");
 			audioSource.Play();
-			//transform.position = aux;
 			contColumn++;
+		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				
+				foreach (KeyValuePair<string, Button> aux in yesQuestionButtonDirectory)
+				{
+					if (aux.Value.gameObject.name != "YesColumnAndBeamBtn")
+					{
+						aux.Value.gameObject.SetActive(false);
+					}
+					else
+					{
+						aux.Value.gameObject.SetActive(true);
+					}
+				}
+				
+				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Columnas y Vigas</b>?";
+			}
 		}
 	}
 	public void IncreaseFirstAidKitImageCounter()
@@ -240,6 +295,27 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contFirstAidKit++;
 		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				
+				foreach (KeyValuePair<string, Button> aux in yesQuestionButtonDirectory)
+				{
+					if (aux.Value.gameObject.name != "YesFirstAidKitBtn")
+					{
+						aux.Value.gameObject.SetActive(false);
+					}
+					else
+					{
+						aux.Value.gameObject.SetActive(true);
+					}
+				}
+				
+				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Botiquín</b>?";	
+			}
+		}
 	}
 	public void IncreaseEmergencyBackpackImageCounter()
 	{
@@ -248,6 +324,14 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_EmergencyBackpack");
 			audioSource.Play();
 			contEmergencyBackpack++;
+		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Mochila de Emergencia</b>?";	
+			}
 		}
 	}
 	public void IncreaseWindowImageCounter()
@@ -258,6 +342,14 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contWindow++;
 		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Ventana</b>?";	
+			}
+		}
 	}
 	public void IncreaseTelevisionImageCounter()
 	{
@@ -266,6 +358,14 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Television");
 			audioSource.Play();
 			contTelevision++;
+		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Televisión</b>?";	
+			}
 		}
 	}
 	public void IncreaseTableImageCounter()
@@ -276,6 +376,14 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contTable++;
 		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				questionText.text = "Te gustaría repasar de nuevo la parte de la <b>Mesa</b>?";	
+			}
+		}
 	}
 	public void IncreaseStairImageCounter()
 	{
@@ -284,6 +392,14 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Stair");
 			audioSource.Play();
 			contStair++;
+		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				questionText.text = "Te gustaría repasar de nuevo la parte de las <b>Escaleras</b>?";	
+			}
 		}
 	}
 	public void IncreaseMeetingPointImageCounter()
@@ -294,5 +410,71 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contMeetingPoint++;
 		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				questionText.text = "Te gustaría repasar de nuevo la parte del <b>Punto de Reunión</b>?";	
+			}
+		}
+	}
+	
+	//Acciones de los botones SI de las preguntas
+	public void YesButtonColumnAndBeam()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_BeamAndColumn");
+		audioSource.Play();
+		questionCanvas.SetActive(false);
+	}
+	
+	public void YesButtonFirstAidKit()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_FirstAidKit");
+		audioSource.Play();
+	}
+	
+	public void YesButtonEmergencyBackpack()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_EmergencyBackpack");
+		audioSource.Play();
+	}
+	
+	public void YesButtonWindow()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_Window");
+		audioSource.Play();
+	}
+	
+	public void YesButtonTelevision()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_Television");
+		audioSource.Play();
+	}
+	
+	public void YesButtonTable()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_Table");
+		audioSource.Play();
+	}
+	
+	public void YesButtonStair()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_Stair");
+		audioSource.Play();
+	}
+	
+	public void YesButtonMeetingPoint()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Guide_MeetingPoint");
+		audioSource.Play();
 	}
 }
