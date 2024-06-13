@@ -5,9 +5,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class StartMovement : MonoBehaviour
+public class GuideBefore : MonoBehaviour
 {
-	public GameObject nextButton;
+    public GameObject nextButton;
 	
 	//Variables para las animaciones del personaje
 	public Animator animator; 
@@ -17,15 +17,8 @@ public class StartMovement : MonoBehaviour
 	//El modelado 3D del personaje
 	public GameObject guideMeshObject;
 	
-	//Question Canvas
-	public TextMeshProUGUI questionText;
-	public List<GameObject> yesQuestionButtonList;
-	private Dictionary<string, GameObject> yesQuestionButtonDirectory;
-	public Button noQuestionButton;
-	public GameObject questionCanvas;
-	
 	//Lista de botones para la interacción en InteractionCanvas
-	public List<Button> buttons;
+	public List<Button> buttonInteraction;
 	
 	//Lista de audios del guía
 	public List<AudioClip> guideLearning;
@@ -71,7 +64,7 @@ public class StartMovement : MonoBehaviour
 
 		//Animation
 		animator.SetLayerWeight(layerIndex1, 1f);
-		animator.SetLayerWeight(layerIndex2, 2f);
+		animator.SetLayerWeight(layerIndex1, 2f);
 		
 		//Model
 		modelDictionary = new Dictionary<string, GameObject>();
@@ -80,16 +73,6 @@ public class StartMovement : MonoBehaviour
 			if (model != null)
 			{
 				modelDictionary[model.name] = model;
-			}
-		}
-		
-		//Botones de preguntas para repetir interaccion
-		yesQuestionButtonDirectory = new Dictionary<string, GameObject>();
-		foreach (GameObject button in yesQuestionButtonList)
-		{
-			if (button != null)
-			{
-				yesQuestionButtonDirectory[button.name] = button;
 			}
 		}
 	}
@@ -129,7 +112,7 @@ public class StartMovement : MonoBehaviour
 		//Animation StartMovement End
 		if (contAudioReproduce == 0)
 		{
-			if (animator.GetCurrentAnimatorStateInfo(0).IsName("StartMovement") &&
+			if (animator.GetCurrentAnimatorStateInfo(0).IsName("Movement") &&
 			    animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
 			    !animator.IsInTransition(0))
 			{
@@ -226,14 +209,14 @@ public class StartMovement : MonoBehaviour
 		if (currentTime >= 19 && currentTime < 20 && contInteractive == 0)
 		{
 			audioSource.Pause();
-			buttons[0].gameObject.SetActive(true);
+			buttonInteraction[0].gameObject.SetActive(true);
 			contInteractive++;
 		}
 
 		if (currentTime >= 36 && currentTime < 37 && contInteractive == 1)
 		{
 			audioSource.Pause();
-			buttons[1].gameObject.SetActive(true);
+			buttonInteraction[1].gameObject.SetActive(true);
 			contInteractive++;
 		}
 
@@ -279,17 +262,6 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contColumn++;
 		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				
-				yesQuestionButtonDirectory["YesColumnAndBeamBtn"].SetActive(true);
-				
-				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Columnas y Vigas</b>?";
-			}
-		}
 	}
 	public void IncreaseFirstAidKitImageCounter()
 	{
@@ -299,17 +271,6 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_FirstAidKit");
 			audioSource.Play();
 			contFirstAidKit++;
-		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				
-				yesQuestionButtonDirectory["YesFirstAidKitBtn"].SetActive(true);
-				
-				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Botiquín</b>?";	
-			}
 		}
 	}
 	public void IncreaseEmergencyBackpackImageCounter()
@@ -321,15 +282,6 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contEmergencyBackpack++;
 		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesEmergencyBackpackBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Mochila de Emergencia</b>?";	
-			}
-		}
 	}
 	public void IncreaseWindowImageCounter()
 	{
@@ -339,15 +291,6 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Window");
 			audioSource.Play();
 			contWindow++;
-		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesWindowBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Ventana</b>?";	
-			}
 		}
 	}
 	public void IncreaseTelevisionImageCounter()
@@ -359,15 +302,6 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contTelevision++;
 		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesTelevisionBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Televisión</b>?";	
-			}
-		}
 	}
 	public void IncreaseTableImageCounter()
 	{
@@ -377,15 +311,6 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Table");
 			audioSource.Play();
 			contTable++;
-		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesTableBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte de la <b>Mesa</b>?";	
-			}
 		}
 	}
 	public void IncreaseStairImageCounter()
@@ -397,15 +322,6 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contStair++;
 		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesStairBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte de las <b>Escaleras</b>?";	
-			}
-		}
 	}
 	public void IncreaseMeetingPointImageCounter()
 	{
@@ -416,135 +332,6 @@ public class StartMovement : MonoBehaviour
 			audioSource.Play();
 			contMeetingPoint++;
 		}
-		else
-		{
-			if (audioFinishFlag == true)
-			{
-				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesMeetingPointBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte del <b>Punto de Reunión</b>?";	
-			}
-		}
-	}
-	
-	//Acciones de los botones SI de las preguntas
-	public void YesButtonColumnAndBeam()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_BeamAndColumn");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["Column"].SetActive(true);
-	}
-	
-	public void YesButtonFirstAidKit()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_FirstAidKit");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["FirstAidKit"].SetActive(true);
-	}
-	
-	public void YesButtonEmergencyBackpack()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_EmergencyBackpack");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["EmergencyBackpack"].SetActive(true);
-	}
-	
-	public void YesButtonWindow()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_Window");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["Window"].SetActive(true);
-	}
-	
-	public void YesButtonTelevision()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_Television");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["Television"].SetActive(true);
-	}
-	
-	public void YesButtonTable()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_Table");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["Table"].SetActive(true);
-	}
-	
-	public void YesButtonStair()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_Stair");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["Stair"].SetActive(true);
-	}
-	
-	public void YesButtonMeetingPoint()
-	{
-		audioFinishFlag = false;
-		SetAudioClipByName("Guide_MeetingPoint");
-		audioSource.Play();
-		questionCanvas.SetActive(false);
-		
-		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-		{ 
-			aux.Value.SetActive(false);
-		}
-
-		modelDictionary["MeetingPoint"].SetActive(true);
 	}
 
 	//Finalización de la interacción y que pase al siguiente
