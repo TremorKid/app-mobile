@@ -1,142 +1,166 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.EventSystems;
-using System.Text;
-using System.Collections;
+using System;
+using Newtonsoft.Json;
+using Quiz.Bean;
+using Quiz.Enum;
+using Quiz.Model;
+using Service;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class QuizNavigation : MonoBehaviour
 {
-    private string _url = "http://3.232.140.223:8080/service/quiz/";
-    private QuizBean _quizBean;
+    private AppService _appService;
+    private QuizBean _quizBeanSend;
+    private QuestionsTemplate _questionsTemplate;
+    
+    // Components UI
+    public TextMeshProUGUI textMeshQuestion;
+    public Button meshOption1Btn;
+    public Button meshOption2Btn;
+    public Button meshOption3Btn;
+    public Button meshOption4Btn;
+    public Button meshOption5Btn;
+    
+    public Button nextBtn;
+    public Button prevBtn;
+    
     private int _index;
-    void Start()
+    
+    private const string TextSendBtn = "Enviar";
+    
+    private void Start()
     {
-        _quizBean = new QuizBean();
+        _quizBeanSend = new QuizBean();
+        _appService = gameObject.AddComponent<AppService>();
         _index = 0;
+
+        _appService.GetGeneralParameterValue(GeneralParameterEnum.QuizTemplate, value =>
+        {
+            try {
+                _questionsTemplate = JsonConvert.DeserializeObject<QuestionsTemplate>(value);
+            } catch (Exception e) {
+                Debug.LogError("Error al deserializar JSON: " + e.Message);
+            }
+        });
+        // UpdateText(_index);
+        prevBtn.gameObject.SetActive(false);
     }
     
     public void IncrementIndex()
     {
-        Debug.Log("INCREMENTANDO: " + _index);
         ++_index;
+        Debug.Log("index: " + _index);
+        if (_index == 10)
+        {
+            _quizBeanSend.userName = "Erikc Cortez";
+            SendQuiz(JsonUtility.ToJson(_quizBeanSend));
+        }
+        else
+        {
+            UpdateText(_index);
+            if (_index == 9)
+            {
+                nextBtn.GetComponentInChildren<TextMeshProUGUI>().text = TextSendBtn;
+                nextBtn.image.color = ChangeColor("send");
+            }
+        }
+
+        if (_index != 0)
+        {
+            prevBtn.gameObject.SetActive(true);
+        }
         
-        _quizBean.quiz1 = "value1";
-        _quizBean.quiz2 = "value2";
-        _quizBean.quiz3 = "value3";
-        _quizBean.quiz4 = "value4";
-        _quizBean.quiz5 = "value5";
-        _quizBean.quiz6 = "value6";
-        _quizBean.quiz7 = "value7";
-        _quizBean.quiz8 = "value8";
-        _quizBean.quiz9 = "value9";
-        _quizBean.quiz10 = "value10";
-        _quizBean.userName = "ErikcCortez";
-        Debug.Log("EMPEZAMOS SETEAR VALORES" + _quizBean);
     }
     
     public void DecrementIndex()
     {
         --_index;
-    }
-
-    public void SetOptionQuiz()
-    {
-        // Debug.Log("EMPEZAMOS 111111111");
-        // if (_index == 1)
-        // {
-        //     _quizBean.quiz1 = "value1";
-        // } else if (_index == 2)
-        // {
-        //     _quizBean.quiz2 = "value2";
-        // } else if (_index == 3)
-        // {
-        //     _quizBean.quiz3 = "value3";
-        // } else if (_index == 4)
-        // {
-        //     _quizBean.quiz4 = "value4";
-        // } else if (_index == 5)
-        // {
-        //     _quizBean.quiz5 = "value5";
-        // } else if (_index == 6)
-        // {
-        //     _quizBean.quiz6 = "value6";
-        // } else if (_index == 7)
-        // {
-        //     _quizBean.quiz7 = "value7";
-        // } else if (_index == 8)
-        // {
-        //     _quizBean.quiz8 = "value8";
-        // } else if (_index == 9)
-        // {
-        //     _quizBean.quiz9 = "value9";
-        // } else if (_index == 10)
-        // {
-        //     _quizBean.quiz10 = "value10";
-        // } else if (_index == 10)
-        // {
-        //     Debug.Log("EMPEZAMOS 11111");
-        //     _quizBean.quiz10 = "value10";
-        // } else if (_index == 11)
-        // {
-        //     Debug.Log("EMPEZAMOS ENVIAR1111111");
-        //     _quizBean.userName = "ErikcCortez";
-        //     // SendQuiz(URL, _quizBean);
-        // } 
-    }
-    
-    public void SendQuiz()
-    {
-        _quizBean.quiz1 = "value1";
-        _quizBean.quiz2 = "value2";
-        _quizBean.quiz3 = "value3";
-        _quizBean.quiz4 = "value4";
-        _quizBean.quiz5 = "value5";
-        _quizBean.quiz6 = "value6";
-        _quizBean.quiz7 = "value7";
-        _quizBean.quiz8 = "value8";
-        _quizBean.quiz9 = "value9";
-        _quizBean.quiz10 = "value10";
-        _quizBean.userName = "ErikcCortez";
-        
-        Debug.Log("EMPEZAMOS ENVIAR " + _quizBean);
-        string quizBeanJson = JsonUtility.ToJson(_quizBean);
-        Debug.Log("EMPEZAMOS ENVIAR " + quizBeanJson);
-        StartCoroutine(SendQuizCoroutine(quizBeanJson));
-    }
-
-    private IEnumerator SendQuizCoroutine(string quizBeanJson)
-    {
-        using (UnityWebRequest webRequest = new UnityWebRequest(_url, "POST"))
+        UpdateText(_index);
+        if (_index == 0)
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(quizBeanJson);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-
-            // Enviar la solicitud
-            UnityWebRequestAsyncOperation asyncOperation = webRequest.SendWebRequest();
-
-            // Esperar hasta que se complete la solicitud
-            while (!asyncOperation.isDone)
-                yield return null;
-
-            Debug.Log("Mensaje enviado correctamente: " + webRequest.result);
-            
-            if (webRequest.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Error: " + webRequest.error);
-                Debug.Log("Response: " + webRequest.downloadHandler.text);
-            }
-            else
-            {
-                Debug.Log("Mensaje enviado correctamente: " + webRequest.result);
-                Debug.Log("Response: " + webRequest.downloadHandler.text);
-            }
+            prevBtn.gameObject.SetActive(false);
         }
     }
     
+    public void SetOptionQuiz(Button optionBtn)
+    {
+        ResetButtonColor();
+        var optionTextBtn = optionBtn.GetComponentInChildren<TextMeshProUGUI>().text;
+        switch (_index)
+        {
+            case 0:
+                _quizBeanSend.quiz1 = optionTextBtn;
+                break;
+            case 1:
+                _quizBeanSend.quiz2 = optionTextBtn;
+                break;
+            case 2:
+                _quizBeanSend.quiz3 = optionTextBtn;
+                break;
+            case 3:
+                _quizBeanSend.quiz4 = optionTextBtn;
+                break;
+            case 4:
+                _quizBeanSend.quiz5 = optionTextBtn;
+                break;
+            case 5:
+                _quizBeanSend.quiz6 = optionTextBtn;
+                break;
+            case 6:
+                _quizBeanSend.quiz7 = optionTextBtn;
+                break;
+            case 7:
+                _quizBeanSend.quiz8 = optionTextBtn;
+                break;
+            case 8:
+                _quizBeanSend.quiz9 = optionTextBtn;
+                break;
+            case 9:
+                _quizBeanSend.quiz10 = optionTextBtn;
+                break;
+            default:
+                Debug.LogError("Opción no encontrada.");
+                break;
+        }
 
+        optionBtn.image.color = ChangeColor("mark");
+    }
+    
+    private void SendQuiz(string sendQuizBean)
+    {
+        _appService.SendQuiz(sendQuizBean);
+    }
+    
+    private void UpdateText(int index)
+    {
+        textMeshQuestion.text = _questionsTemplate.questions[index].question;
+        meshOption1Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative1;
+        meshOption2Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative2;
+        meshOption3Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative3;
+        meshOption4Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative4;
+        meshOption5Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative5;
+    }
+
+    private static Color ChangeColor(string code)
+    {
+        return code switch
+        {
+            "mark" => new Color32(17, 170, 0, 255),
+            "send" => new Color32(10, 115, 0, 255),
+            "disable" => new Color32(150, 150, 150, 255),
+            _ => new Color32(111, 11, 111, 255)
+        };
+    }
+
+    private void ResetButtonColor()
+    {
+        var color = ChangeColor("none");
+        meshOption1Btn.image.color = color;
+        meshOption2Btn.image.color = color;
+        meshOption3Btn.image.color = color;
+        meshOption4Btn.image.color = color;
+        meshOption5Btn.image.color = color;
+    }
 
 }
