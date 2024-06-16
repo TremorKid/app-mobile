@@ -2040,6 +2040,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddd627d6040ca04fb035d6f72841883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activityBtn: {fileID: 2063517490}
+  instructionBtn: {fileID: 615016585}
+  exitBtn: {fileID: 1023271893}
 --- !u!4 &1322311208
 Transform:
   m_ObjectHideFlags: 0

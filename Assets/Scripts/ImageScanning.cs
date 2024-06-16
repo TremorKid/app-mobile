@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Quiz;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ public class ImageScanning : MonoBehaviour
     
     void Update()
     {
+        QuizNavigation.IsInitialQuiz = false;
         DuringSceneEnding("Quiz");
     }
     

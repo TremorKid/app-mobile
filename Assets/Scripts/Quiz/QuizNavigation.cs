@@ -1,9 +1,9 @@
 using System;
-using Newtonsoft.Json;
+using MainMenu;
 using Quiz.Bean;
-using Quiz.Enum;
 using Quiz.Model;
 using Service;
+using Shared;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,40 +15,31 @@ namespace Quiz
     {
         private AppService _appService;
         private QuizBean _quizBeanSend;
-        private QuestionsTemplate _questionsTemplate;
         
         // Components UI
+        public static QuestionsTemplate QuestionsTemp;
+        public static bool IsInitialQuiz = true;
         public TextMeshProUGUI textMeshQuestion;
         public Button meshOption1Btn;
         public Button meshOption2Btn;
         public Button meshOption3Btn;
         public Button meshOption4Btn;
         public Button meshOption5Btn;
-        
         public Button nextBtn;
         public Button prevBtn;
-        
         private int _index;
         
         private const string TextSendBtn = "Enviar";
         private const string MenuScene = "Menu";
-        private const string Learning = "Learning";
+        // private const string Learning = "Learning";
         
         private void Start()
         {
             _quizBeanSend = new QuizBean();
             _appService = gameObject.AddComponent<AppService>();
             _index = 0;
-
-            _appService.GetGeneralParameterValue(GeneralParameterEnum.QuizTemplate, value =>
-            {
-                try {
-                    _questionsTemplate = JsonConvert.DeserializeObject<QuestionsTemplate>(value);
-                } catch (Exception e) {
-                    Debug.LogError("Error al deserializar JSON: " + e.Message);
-                }
-            });
-            // UpdateText(_index);
+            
+            UpdateText(_index);
             prevBtn.gameObject.SetActive(false);
         }
         
@@ -58,7 +49,10 @@ namespace Quiz
             if (_index == 10)
             {
                 _quizBeanSend.userName = PlayerPrefs.GetString("userName");
+                _quizBeanSend.isFirstQuiz = IsInitialQuiz;
                 SendQuiz(JsonUtility.ToJson(_quizBeanSend));
+                
+                MenuLogic.IsInitialQuiz = IsInitialQuiz;
                 SceneManager.LoadScene(MenuScene);
             }
             else
@@ -67,7 +61,7 @@ namespace Quiz
                 if (_index == 9)
                 {
                     nextBtn.GetComponentInChildren<TextMeshProUGUI>().text = TextSendBtn;
-                    nextBtn.image.color = ChangeColor("send");
+                    nextBtn.image.color = SharedTools.ChangeColor("send");
                 }
             }
 
@@ -131,47 +125,34 @@ namespace Quiz
                     break;
             }
 
-            optionBtn.image.color = ChangeColor("mark");
+            optionBtn.image.color = SharedTools.ChangeColor("mark");
         }
         
         private void SendQuiz(string sendQuizBean)
         {
             try
             {
-                Debug.Log("gooo");
                 _appService.SendQuiz(sendQuizBean);
             }
             catch (Exception e)
             {
                 Debug.LogError("Error en Service: " + e);
             }
-           
         }
         
         private void UpdateText(int index)
         {
-            textMeshQuestion.text = _questionsTemplate.questions[index].question;
-            meshOption1Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative1;
-            meshOption2Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative2;
-            meshOption3Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative3;
-            meshOption4Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative4;
-            meshOption5Btn.GetComponentInChildren<TextMeshProUGUI>().text = _questionsTemplate.questions[index].alternative5;
-        }
-
-        private static Color ChangeColor(string code)
-        {
-            return code switch
-            {
-                "mark" => new Color32(17, 170, 0, 255),
-                "send" => new Color32(10, 115, 0, 255),
-                "disable" => new Color32(150, 150, 150, 255),
-                _ => new Color32(255, 255, 255, 255)
-            };
+            textMeshQuestion.text = QuestionsTemp.questions[index].question;
+            meshOption1Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative1;
+            meshOption2Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative2;
+            meshOption3Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative3;
+            meshOption4Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative4;
+            meshOption5Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative5;
         }
 
         private void ResetButtonColor()
         {
-            var color = ChangeColor("none");
+            var color = SharedTools.ChangeColor("none");
             meshOption1Btn.image.color = color;
             meshOption2Btn.image.color = color;
             meshOption3Btn.image.color = color;
