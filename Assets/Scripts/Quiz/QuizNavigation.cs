@@ -127,7 +127,7 @@ namespace Quiz
                     _quizBeanSend.quiz10 = optionTextBtn;
                     break;
                 default:
-                    Debug.LogError("Opción no encontrada.");
+                    Debug.LogError("Opción no encontrada." + _index);
                     break;
             }
 
@@ -136,7 +136,16 @@ namespace Quiz
         
         private void SendQuiz(string sendQuizBean)
         {
-            _appService.SendQuiz(sendQuizBean);
+            try
+            {
+                Debug.Log("gooo");
+                _appService.SendQuiz(sendQuizBean);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error en Service: " + e);
+            }
+           
         }
         
         private void UpdateText(int index)
