@@ -90,7 +90,7 @@ public class GuideBefore : MonoBehaviour
 		//Animation StartMovement End
 		if (contAudioReproduce == 0)
 		{
-			if (animator.GetCurrentAnimatorStateInfo(0).IsName("Movement") &&
+			if (animator.GetCurrentAnimatorStateInfo(0).IsName("EmergencyBackpackMovement") &&
 			    animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
 			    !animator.IsInTransition(0))
 			{
@@ -99,7 +99,7 @@ public class GuideBefore : MonoBehaviour
 				SetAudioClipByName("guide_scene3_emergencyBackpack");
 				contAudioReproduce++;
 				//Animation
-				animator.SetInteger("Actions", 1);
+				animator.SetInteger("action_before", 1);
 				audioSource.Play();
 			}
 		}
@@ -107,7 +107,7 @@ public class GuideBefore : MonoBehaviour
 		if (contAudioReproduce == 1)
 		{
 			//CUANDO EL AUDIO INICIAL DEL GUIA TERMINA, DA PASO A LA INTERACTIVIDAD DE LAS IMAGENES, POR ELLO SE ABELITIA CON SETACTIVE
-			if (audioSource.clip.name == "Guide_Start_Learning" && currentTime == 0 && !audioSource.isPlaying)
+			if (audioSource.clip.name == "guide_scene3_emergencyBackpack" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				//gameObject.SetActive(false);
 				foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
@@ -120,59 +120,6 @@ public class GuideBefore : MonoBehaviour
 			
 			//CUANDO ESCANEA LA IMAGEN DE LA COLUMNA, Y TERMINA SU AUDIO, SE HABILITA TODOS LOS MODELOS
 			//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
-			if (audioSource.clip.name == "Guide_BeamAndColumn" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_FirstAidKit" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_EmergencyBackpack" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_Stair" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_Table" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_Television" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_Window" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_Beam" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
-			
-			if (audioSource.clip.name == "Guide_MeetingPoint" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
 		}
 		
 	}
