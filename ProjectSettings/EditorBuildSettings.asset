@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Learning.unity
     guid: 459f50bb418299f419961d5f9fee53c2
   - enabled: 1
+    path: Assets/Scenes/Quiz.unity
+    guid: c394842023a6c394bb10fb34a7d0c84c
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: d45889b948e75fe41af7f930c7b910eb
+  - enabled: 1
     path: Assets/Scenes/Before.unity
     guid: a022230c05ae34944bbff661bd28571d
   m_configObjects: {}
