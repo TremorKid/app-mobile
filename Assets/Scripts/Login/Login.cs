@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,10 +15,19 @@ namespace Login
         private const string StringEmpty = "";
         private void Start()
         {
-            _userName = PlayerPrefs.GetString(UserName);
-            if (_userName != null)
+            // PlayerPrefs.DeleteKey("userName");
+            try
             {
-                SceneManager.LoadScene(QuizScene);
+                _userName = PlayerPrefs.GetString(UserName);
+                Debug.Log("que es esta weba: " + _userName);
+                if (!string.IsNullOrEmpty(_userName))
+                {
+                    SceneManager.LoadScene(QuizScene);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("que es esta weba: " + e);
             }
         }
         
