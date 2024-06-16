@@ -6,6 +6,7 @@ using Quiz.Model;
 using Service;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Quiz
@@ -30,6 +31,7 @@ namespace Quiz
         private int _index;
         
         private const string TextSendBtn = "Enviar";
+        private const string MenuScene = "Menu";
         
         private void Start()
         {
@@ -52,11 +54,11 @@ namespace Quiz
         public void IncrementIndex()
         {
             ++_index;
-            Debug.Log("index: " + _index);
             if (_index == 10)
             {
                 _quizBeanSend.userName = PlayerPrefs.GetString("userName");
                 SendQuiz(JsonUtility.ToJson(_quizBeanSend));
+                SceneManager.LoadScene(MenuScene);
             }
             else
             {
