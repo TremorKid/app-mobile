@@ -28,7 +28,7 @@ public class ImageScanning : MonoBehaviour
     
     void Update()
     {
-        DuringSceneEnding("Menu");
+        DuringSceneEnding("Quiz");
     }
     
     // ASIGNAR UN AUDIOSOURCE DE LA LISTA DE AUDIOCLIP

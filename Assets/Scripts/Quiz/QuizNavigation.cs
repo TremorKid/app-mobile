@@ -32,6 +32,7 @@ namespace Quiz
         
         private const string TextSendBtn = "Enviar";
         private const string MenuScene = "Menu";
+        private const string Learning = "Learning";
         
         private void Start()
         {
