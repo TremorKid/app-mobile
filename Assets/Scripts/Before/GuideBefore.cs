@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class GuideBefore : MonoBehaviour
 {
-    public GameObject nextButton;
-	
-	//Variables para las animaciones del personaje
+    //Variables para las animaciones del personaje
 	public Animator animator; 
 	public int layerIndex1;
 	public int layerIndex2;
@@ -36,16 +34,6 @@ public class GuideBefore : MonoBehaviour
 	private float currentTime = 0f;
 	private short contAudioReproduce = 0;
 	private short contInteractive = 0;
-	
-	//Contadores para saber cuantas veces se escaneo la imagen
-	private short contColumn = 0;
-	private short contFirstAidKit = 0;
-	private short contEmergencyBackpack = 0;
-	private short contStair = 0;
-	private short contWindow = 0;
-	private short contTelevision = 0;
-	private short contMeetingPoint = 0;
-	private short contTable = 0;
 	
 	//Condicional para saber si el audio termino
 	private bool audioFinishFlag;
@@ -80,22 +68,12 @@ public class GuideBefore : MonoBehaviour
 	void Update()
 	{
 		ControlAnimationPartameters();
-		FinishLearningScene();
 	}
 
 	void InitialMovementClipPlay()
 	{
 		audioSource.clip = birdSongSoundEffectClip;
 		audioSource.Play();
-	}
-
-	// NO TERMINADA: PARA POSICIONAR AL GUIA AL COSTADO DE LA IMAGEN ESCANEADA 
-	void GuidePositionModel()
-	{
-		if (contColumn == 1)
-		{
-			Debug.Log("Conteo de columna: 1");
-		}
 	}
 
 	//FUNCIÓN DE CONTROL DE ANIMACIONES Y AUDIO PARA LA REPRODUCCIÓN DE AUDIO Y ANIMACIONES EN LA ESCENA
@@ -118,7 +96,7 @@ public class GuideBefore : MonoBehaviour
 			{
 				//Audio
 				audioSource.Pause();
-				SetAudioClipByName("Guide_Start_Learning");
+				SetAudioClipByName("guide_scene3_emergencyBackpack");
 				contAudioReproduce++;
 				//Animation
 				animator.SetInteger("Actions", 1);
@@ -206,17 +184,24 @@ public class GuideBefore : MonoBehaviour
 
 		Debug.Log(currentTime);
 
-		if (currentTime >= 19 && currentTime < 20 && contInteractive == 0)
+		if (currentTime >= 7 && currentTime < 8 && contInteractive == 0)
 		{
 			audioSource.Pause();
 			buttonInteraction[0].gameObject.SetActive(true);
 			contInteractive++;
 		}
 
-		if (currentTime >= 36 && currentTime < 37 && contInteractive == 1)
+		if (currentTime >= 30 && currentTime < 31 && contInteractive == 1)
 		{
 			audioSource.Pause();
 			buttonInteraction[1].gameObject.SetActive(true);
+			contInteractive++;
+		}
+
+		if (currentTime >= 55 && currentTime < 56 && contInteractive == 2)
+		{
+			audioSource.Pause();
+			buttonInteraction[2].gameObject.SetActive(true);
 			contInteractive++;
 		}
 
@@ -250,102 +235,5 @@ public class GuideBefore : MonoBehaviour
 		}
 
 		modelDictionary[nameModel].SetActive(flag);
-	}
-
-	// CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN
-	public void IncreaseColumnImageCounter()
-	{
-		if (contColumn == 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_BeamAndColumn");
-			audioSource.Play();
-			contColumn++;
-		}
-	}
-	public void IncreaseFirstAidKitImageCounter()
-	{
-		if (contFirstAidKit == 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_FirstAidKit");
-			audioSource.Play();
-			contFirstAidKit++;
-		}
-	}
-	public void IncreaseEmergencyBackpackImageCounter()
-	{
-		if (contEmergencyBackpack == 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_EmergencyBackpack");
-			audioSource.Play();
-			contEmergencyBackpack++;
-		}
-	}
-	public void IncreaseWindowImageCounter()
-	{
-		if (contWindow == 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_Window");
-			audioSource.Play();
-			contWindow++;
-		}
-	}
-	public void IncreaseTelevisionImageCounter()
-	{
-		if (contTelevision == 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_Television");
-			audioSource.Play();
-			contTelevision++;
-		}
-	}
-	public void IncreaseTableImageCounter()
-	{
-		if (contTable == 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_Table");
-			audioSource.Play();
-			contTable++;
-		}
-	}
-	public void IncreaseStairImageCounter()
-	{
-		if (contStair == 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_Stair");
-			audioSource.Play();
-			contStair++;
-		}
-	}
-	public void IncreaseMeetingPointImageCounter()
-	{
-		if (contMeetingPoint== 0)
-		{
-			audioFinishFlag = false;
-			SetAudioClipByName("Guide_MeetingPoint");
-			audioSource.Play();
-			contMeetingPoint++;
-		}
-	}
-
-	//Finalización de la interacción y que pase al siguiente
-	private void FinishLearningScene()
-	{
-		if (contInteractive >= 1 && contColumn >= 1 && contFirstAidKit >= 1 && contEmergencyBackpack >= 1 &&
-		    contStair >= 1 && contWindow >= 1 && contTelevision >= 1 && contMeetingPoint >= 1 && contTable >= 1)
-		{
-			nextButton.SetActive(true);
-		}
-	}
-
-	public void LoadScene(string name)
-	{
-		SceneManager.LoadScene(name);
 	}
 }

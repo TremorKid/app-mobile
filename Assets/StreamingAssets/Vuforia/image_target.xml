@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="StillBottledWater" size="1.000000 0.993562" />
+    <ImageTarget name="PortableRadio" size="1.000000 0.990099" />
+    <ImageTarget name="PolyesterRopes" size="1.000000 0.993213" />
+    <ImageTarget name="MultipurposeBlade" size="1.000000 0.997976" />
+    <ImageTarget name="FleeceBlanket" size="1.000000 0.990000" />
+    <ImageTarget name="Flashlight" size="1.000000 0.995402" />
+    <ImageTarget name="Cannedfood" size="1.000000 0.989848" />
+    <ImageTarget name="SterileGauze" size="1.000000 0.995789" />
+    <ImageTarget name="Mask" size="1.000000 0.987124" />
+    <ImageTarget name="Antibiotics" size="1.000000 1.000000" />
+    <ImageTarget name="Alcohol" size="1.000000 0.993506" />
+    <ImageTarget name="AdhesiveTape" size="1.000000 0.987097" />
+    <ImageTarget name="Lighter" size="1.000000 1.000000" />
+    <ImageTarget name="HandTowel" size="1.000000 0.979487" />
+    <ImageTarget name="AntibacterialGel" size="1.000000 0.994845" />
+    <ImageTarget name="ToothBrush" size="1.000000 0.993333" />
     <ImageTarget name="MeetingPoint" size="1.000000 1.547649" />
     <ImageTarget name="Stair" size="1.000000 1.547649" />
     <ImageTarget name="Table" size="1.000000 1.547649" />
