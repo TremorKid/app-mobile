@@ -1,4 +1,9 @@
 using System;
+using Newtonsoft.Json;
+using Quiz;
+using Quiz.Enum;
+using Quiz.Model;
+using Service;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,6 +12,7 @@ namespace Login
 {
     public class Login : MonoBehaviour
     {
+        private AppService _appService;
         public TMP_InputField inputText;
         private string _userName;
         
@@ -16,18 +22,22 @@ namespace Login
         private void Start()
         {
             // PlayerPrefs.DeleteKey("userName");
-            try
+            _userName = PlayerPrefs.GetString(UserName);
+            _appService = gameObject.AddComponent<AppService>();
+            
+            // GetGeneralParameter
+            _appService.GetGeneralParameterValue(GeneralParameterEnum.QuizTemplate, value =>
             {
-                _userName = PlayerPrefs.GetString(UserName);
-                Debug.Log("que es esta weba: " + _userName);
-                if (!string.IsNullOrEmpty(_userName))
-                {
-                    SceneManager.LoadScene(QuizScene);
+                try {
+                    QuizNavigation.QuestionsTemp = JsonConvert.DeserializeObject<QuestionsTemplate>(value);
+                } catch (Exception e) {
+                    Debug.LogError("Error al deserializar JSON: " + e.Message);
                 }
-            }
-            catch (Exception e)
+            });
+            
+            if (!string.IsNullOrEmpty(_userName))
             {
-                Debug.LogError("que es esta weba: " + e);
+                // SceneManager.LoadScene(QuizScene);
             }
         }
         

@@ -16,5 +16,6 @@ namespace Quiz.Bean
         public string quiz8;
         public string quiz9;
         public string quiz10;
+        public bool isFirstQuiz;
     }   
 }
