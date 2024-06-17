@@ -35,7 +35,6 @@ namespace Quiz
         
         private void Start()
         {
-            IsInitialQuiz = true;
             _quizBeanSend = new QuizBean();
             _appService = gameObject.AddComponent<AppService>();
             _index = 0;
