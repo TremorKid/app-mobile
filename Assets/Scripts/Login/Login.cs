@@ -44,6 +44,7 @@ namespace Login
         public void SendName()
         {
             PlayerPrefs.SetString(UserName, inputText.text);
+            QuizNavigation.IsInitialQuiz = true;
             SceneManager.LoadScene(QuizScene);
         }
         
