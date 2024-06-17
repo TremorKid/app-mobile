@@ -30,9 +30,9 @@ namespace MainMenu
                 activityBtn.enabled = true;
                 instructionBtn.enabled = true;
                 exitBtn.enabled = true;
-                activityBtn.image.color = SharedTools.ChangeColor("disable");
-                instructionBtn.image.color = SharedTools.ChangeColor("disable");
-                exitBtn.image.color = SharedTools.ChangeColor("disable");
+                activityBtn.image.color = SharedTools.ChangeColor("enable");
+                instructionBtn.image.color = SharedTools.ChangeColor("enable");
+                exitBtn.image.color = SharedTools.ChangeColor("enable");
             }
         }
 

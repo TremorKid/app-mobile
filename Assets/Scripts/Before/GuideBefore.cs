@@ -183,4 +183,9 @@ public class GuideBefore : MonoBehaviour
 
 		modelDictionary[nameModel].SetActive(flag);
 	}
+	
+	public void LoadScene(string name)
+	{
+		SceneManager.LoadScene(name);
+	}
 }

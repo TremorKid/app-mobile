@@ -18,7 +18,7 @@ namespace Quiz
         
         // Components UI
         public static QuestionsTemplate QuestionsTemp;
-        public static bool IsInitialQuiz = true;
+        public static bool IsInitialQuiz;
         public TextMeshProUGUI textMeshQuestion;
         public Button meshOption1Btn;
         public Button meshOption2Btn;
@@ -35,6 +35,7 @@ namespace Quiz
         
         private void Start()
         {
+            IsInitialQuiz = true;
             _quizBeanSend = new QuizBean();
             _appService = gameObject.AddComponent<AppService>();
             _index = 0;

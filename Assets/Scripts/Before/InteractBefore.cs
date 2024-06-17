@@ -28,8 +28,13 @@ public class InteractBefore : MonoBehaviour
     public AudioSource audioSource;
     public List<AudioClip> beforeNameList; 
     private Dictionary<string, AudioClip> beforeNameDictionary;
-    public GameObject firstAidKitCanvas;
-    public GameObject emergencyBackpackCanvas;
+    
+    //Imagenes del escaneo de mochila de emergencia
+    public List<GameObject> emergencyBackpackModelsList;
+    private Dictionary<string, GameObject> emergencyBackpackModelsDictionary;
+    //Imagenes del escaneo de mochila de botquín
+    public List<GameObject> firstAidKitModelsList;
+    private Dictionary<string, GameObject> firstAidKitModelsDictionary;
     void Start()
     {
         beforeNameDictionary = new Dictionary<string, AudioClip>();
@@ -37,11 +42,23 @@ public class InteractBefore : MonoBehaviour
         {
             beforeNameDictionary[clip.name] = clip;
         }
+        
+        emergencyBackpackModelsDictionary = new Dictionary<string, GameObject>();
+        foreach (GameObject aux in emergencyBackpackModelsList)
+        {
+            emergencyBackpackModelsDictionary[aux.name] = aux;
+        }
+        
+        firstAidKitModelsDictionary = new Dictionary<string, GameObject>();
+        foreach (GameObject aux in firstAidKitModelsList)
+        {
+            firstAidKitModelsDictionary[aux.name] = aux;
+        }
     }
     
     void Update()
     {
-        BeforeEnding("Before");
+        BeforeEnding();
     }
     
     // ASIGNAR UN AUDIOSOURCE DE LA LISTA DE AUDIOCLIP
@@ -56,110 +73,85 @@ public class InteractBefore : MonoBehaviour
     // CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN DE LA MOCHILA DE EMERGENCIA
     public void IncreaseStillBottledWaterCount()
     {
-        if (countStillBottledWater == 0)
-        {
-            countStillBottledWater++;
-        }
+        countStillBottledWater++;
+        
         
         SetAudioClipByName("guide_stillBottledWater_name");
         audioSource.Play();
     }
     public void IncreasePortableRadioCount()
     {
-        if (countPortableRadio == 0)
-        {
-            countPortableRadio++;   
-        }
+        countPortableRadio++;   
+        
         
         SetAudioClipByName("guide_portableRadio_name");
         audioSource.Play();
     }
     public void IncreasePolyesterRopesCount()
-    {
-        if (countPolyesterRopes == 0)
-        {
-            countPolyesterRopes++;
-        }
+    { 
+        countPolyesterRopes++;
+        
         
         SetAudioClipByName("guide_polyesterRopes_name");
         audioSource.Play();
     }
     public void IncreaseMultipurposeBladeCount()
     {
-        if (countMultipurposeBlade == 0)
-        {
-            countMultipurposeBlade++;
-        }
+        countMultipurposeBlade++;
+        
         
         SetAudioClipByName("guide_multipurposeBlade_name");
         audioSource.Play();
     }
     public void IncreaseFleeceBlanketCount()
     {
-        if (countFleeceBlanket == 0)
-        {
-            countFleeceBlanket++;
-        }
+        countFleeceBlanket++;
+        
         
         SetAudioClipByName("guide_fleeceBlanket_name");
         audioSource.Play();
     }
     public void IncreaseFlashlightCount()
-    {
-        if (countFlashlight == 0)
-        {
-            countFlashlight++;
-        }
+    { 
+        countFlashlight++;
+        
         
         SetAudioClipByName("guide_flashlight_name");
         audioSource.Play();
     }
     public void IncreaseCannedFoodCount()
     {
-        if (countCannedFood == 0)
-        {
-            countCannedFood++;
-        }
+        countCannedFood++;
         
         SetAudioClipByName("guide_cannedFood_name");
         audioSource.Play();
     }
     public void IncreaseLighterCount()
     {
-        if (countLighter == 0)
-        {
-            countLighter++;
-        }
+        countLighter++;
         
         SetAudioClipByName("guide_lighter_name");
         audioSource.Play();
     }
     public void IncreaseHandTowelCount()
     {
-        if (countHandTowel == 0)
-        {
-            countHandTowel++;
-        }
+        countHandTowel++;
+        
         
         SetAudioClipByName("guide_handTowel_name");
         audioSource.Play();
     }
     public void IncreaseAntibacterialGelCount()
     {
-        if (countAntibacterialGel == 0)
-        {
-            countAntibacterialGel++;
-        }
+        countAntibacterialGel++;
+
         
         SetAudioClipByName("guide_antibacterialGel_name");
         audioSource.Play();
     }
     public void IncreaseToothBrushCount()
     {
-        if (countToothBrush == 0)
-        {
-            countToothBrush++;
-        }
+        countToothBrush++;
         
         SetAudioClipByName("guide_toothbrush_name");
         audioSource.Play();
@@ -168,71 +160,68 @@ public class InteractBefore : MonoBehaviour
     // CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN DEL BOTIQUIN 
     public void IncreaseSterileGauzeCount()
     {
-        if (countSterileGauze == 0)
-        {
-            countSterileGauze++;
-        }
+
+        countSterileGauze++;
+        
         
         SetAudioClipByName("guide_sterileGauze_name");
         audioSource.Play();
     }
     public void IncreaseMaskCount()
     {
-        if (countMask == 0)
-        {
-            countMask++;
-        }
+        countMask++;
+        
         
         SetAudioClipByName("guide_mask_name");
         audioSource.Play();
     }
     public void IncreaseAntibioticsCount()
     {
-        if (countAntibiotics == 0)
-        {
-            countAntibiotics++;
-        }
+        countAntibiotics++;
+        
         
         SetAudioClipByName("guide_antibiotics_name");
         audioSource.Play();
     }
     public void IncreaseAlcoholCount()
     {
-        if (countAlcohol == 0)
-        {
-            countAlcohol++;
-        }
+        countAlcohol++;
+        
         
         SetAudioClipByName("guide_alcohol_name");
         audioSource.Play();
     }
     public void IncreaseAdhesiveTapeCount()
     {
-        if (countAdhesiveTape == 0)
-        {
-            countAdhesiveTape++;
-        }
+        countAdhesiveTape++;
+        
         
         SetAudioClipByName("guide_adhesiveTape_name");
         audioSource.Play();
     }
     
     //Final de la escena
-    private void BeforeEnding(string name)
+    private void BeforeEnding()
     {
         if (countStillBottledWater >= 1 && countPortableRadio >= 1 && countPolyesterRopes >= 1 && countMultipurposeBlade >= 1
-            && countFleeceBlanket >= 1 && countFlashlight >= 1 && countCannedFood >= 1 && countLighter >= 1
+            && countFlashlight >= 1 && countLighter >= 1
             && countHandTowel >= 1 && countAntibacterialGel >= 1 && countToothBrush >= 1)
         {
-            firstAidKitCanvas.SetActive(true);
-            emergencyBackpackCanvas.SetActive(false);
+            foreach (KeyValuePair<string, GameObject> aux in emergencyBackpackModelsDictionary)
+            { 
+                aux.Value.SetActive(false);
+            }
+            
+            foreach (KeyValuePair<string, GameObject> aux in firstAidKitModelsDictionary)
+            { 
+                aux.Value.SetActive(true);
+            }
         }
         
-        if (countSterileGauze >= 1 && countMask >= 1 && countAntibiotics >= 1 && countAlcohol >= 1
+        if (countSterileGauze >= 1 && countAntibiotics >= 1 && countAlcohol >= 1
             && countAdhesiveTape >= 1)
         {
-            //nextButton.SetActive(true);
-            SceneManager.LoadScene(name);
+            nextButton.SetActive(true);
         }
     }
     public void LoadScene(string name)

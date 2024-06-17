@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c22cc0ba9e05e46a5693c7624e0d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextButton: {fileID: 0}
+  nextButton: {fileID: 1305916338}
   audioSource: {fileID: 502693415}
   beforeNameList:
   - {fileID: 8300000, guid: fbd47a6c4a8bdf342bcd6130c0c29ceb, type: 3}
@@ -1581,8 +1581,24 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e3bf7e9ab4ed24949b525f8b2ada6eec, type: 3}
   - {fileID: 8300000, guid: 08361f8e70b4fd9429c5b244a0a9c0ee, type: 3}
   - {fileID: 8300000, guid: 7030f7786d2f02740a44cc03da5780cc, type: 3}
-  firstAidKitCanvas: {fileID: 548573911}
-  emergencyBackpackCanvas: {fileID: 887354133}
+  emergencyBackpackModelsList:
+  - {fileID: 96660187}
+  - {fileID: 15766565}
+  - {fileID: 801404057}
+  - {fileID: 1160233147}
+  - {fileID: 1429864873}
+  - {fileID: 2120891946}
+  - {fileID: 1264860579}
+  - {fileID: 647293290}
+  - {fileID: 1453833930}
+  - {fileID: 1709503905}
+  - {fileID: 31381}
+  firstAidKitModelsList:
+  - {fileID: 1719586403}
+  - {fileID: 0}
+  - {fileID: 777442329}
+  - {fileID: 1991302778}
+  - {fileID: 1313843184}
 --- !u!4 &502693414
 Transform:
   m_ObjectHideFlags: 0
@@ -1777,7 +1793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &548573912
 Transform:
   m_ObjectHideFlags: 0
@@ -1792,7 +1808,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1719586404}
-  - {fileID: 1014989467}
   - {fileID: 777442330}
   - {fileID: 1991302779}
   - {fileID: 1313843185}
@@ -2550,7 +2565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &777442330
 Transform:
   m_ObjectHideFlags: 0
@@ -3164,142 +3179,6 @@ MonoBehaviour:
   mTargetName: 
   mDatasetName: 
   mCastedBehaviour: {fileID: 967694999}
---- !u!1 &1014989466
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1014989467}
-  - component: {fileID: 1014989470}
-  - component: {fileID: 1014989469}
-  - component: {fileID: 1014989468}
-  m_Layer: 0
-  m_Name: Mask
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1014989467
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014989466}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.89, y: 0, z: -3.84}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 548573912}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1014989468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014989466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1778676317, guid: 8a9a760f95896c34689febc965510927, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mObserverBehaviour: {fileID: 1014989470}
-  mHiddenRoot: {fileID: 0}
-  mTargetName: Mask
-  mDatasetName: Vuforia/image_target.xml
-  mCastedBehaviour: {fileID: 1014989470}
-  mMeshFilter: {fileID: 0}
-  mMeshRenderer: {fileID: 0}
---- !u!114 &1014989469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014989466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886328de6a5c14cbb85854fdf1a5085b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StatusFilter: 0
-  UsePoseSmoothing: 0
-  AnimationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 3.3333333
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.3
-      value: 1
-      inSlope: 3.3333333
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  OnTargetFound:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 502693413}
-        m_TargetAssemblyTypeName: InteractBefore, Assembly-CSharp
-        m_MethodName: IncreaseMaskCount
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnTargetLost:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1014989470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014989466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1631628248, guid: 8a9a760f95896c34689febc965510927, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PreviewVisible: 1
-  RuntimeOcclusion: 0
-  RuntimeCollider: 0
-  mTrackableName: Mask
-  mInitializedInEditor: 1
-  mDataSetPath: Vuforia/image_target.xml
-  mAspectRatio: 0.987124
-  mImageTargetType: 0
-  mWidth: 1
-  mHeight: 0.987124
-  mRuntimeTexture: {fileID: 0}
-  mMotionHint: 1
-  mTrackingOptimization: 0
-  mTrackingOptimizationNeedsUpgrade: 0
-  mPreview: {fileID: 1014989468}
 --- !u!1 &1053775316
 GameObject:
   m_ObjectHideFlags: 0
@@ -4278,7 +4157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1313843185
 Transform:
   m_ObjectHideFlags: 0
@@ -5974,7 +5853,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1719586404
 Transform:
   m_ObjectHideFlags: 0
@@ -7151,7 +7030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1991302779
 Transform:
   m_ObjectHideFlags: 0
