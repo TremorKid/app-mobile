@@ -83,6 +83,7 @@ namespace Quiz
             {
                 prevBtn.gameObject.SetActive(false);
             }
+            OrganiceAlternatives(_index);
             ResetButtonColor();
         }
         
@@ -154,12 +155,22 @@ namespace Quiz
         
         private void OrganiceAlternatives(int index)
         {
+            ResetPositionAlternatives();
             if (QuestionsTemp.questions[index].alternative3 != "") return;
             meshOption1Btn.transform.localPosition = new Vector3(-90, -70, 0);
             meshOption2Btn.transform.localPosition = new Vector3(90, -70, 0);
             meshOption3Btn.gameObject.SetActive(false);
             meshOption4Btn.gameObject.SetActive(false);
             meshOption5Btn.gameObject.SetActive(false);
+        }
+        
+        private void ResetPositionAlternatives()
+        {
+            meshOption1Btn.transform.localPosition = new Vector3(-90, 0, 0);
+            meshOption2Btn.transform.localPosition = new Vector3(-90, -70, 0);
+            meshOption3Btn.gameObject.SetActive(true);
+            meshOption4Btn.gameObject.SetActive(true);
+            meshOption5Btn.gameObject.SetActive(true);
         }
 
         private void ResetButtonColor()
