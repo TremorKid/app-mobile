@@ -70,6 +70,8 @@ namespace Quiz
                 prevBtn.gameObject.SetActive(true);
             }
 
+            OrganiceAlternatives(_index);
+            
             ResetButtonColor();
         }
         
@@ -148,6 +150,16 @@ namespace Quiz
             meshOption3Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative3;
             meshOption4Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative4;
             meshOption5Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative5;
+        }
+        
+        private void OrganiceAlternatives(int index)
+        {
+            if (QuestionsTemp.questions[index].alternative3 != "") return;
+            meshOption1Btn.transform.localPosition = new Vector3(-90, -70, 0);
+            meshOption2Btn.transform.localPosition = new Vector3(90, -70, 0);
+            meshOption3Btn.gameObject.SetActive(false);
+            meshOption4Btn.gameObject.SetActive(false);
+            meshOption5Btn.gameObject.SetActive(false);
         }
 
         private void ResetButtonColor()
