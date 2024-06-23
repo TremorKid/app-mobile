@@ -1,30 +1,33 @@
 using System.Collections;
 using UnityEngine;
 
-public class AudioController : MonoBehaviour
+namespace Game
 {
-    public AudioSource audioSource;
-
-    void Start()
+    public class AudioController : MonoBehaviour
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
+        public AudioSource audioSource;
+
+        private void Start()
         {
-            Debug.LogError("No AudioSource component found on this GameObject.");
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                Debug.LogError("No AudioSource component found on this GameObject.");
+            }
         }
-    }
 
-    public void PauseAudioForSeconds(float seconds)
-    {
-        StartCoroutine(PauseAndResumeAudio(seconds));
-    }
+        public void PauseAudioForSeconds(float seconds)
+        {
+            StartCoroutine(PauseAndResumeAudio(seconds));
+        }
 
-    private IEnumerator PauseAndResumeAudio(float seconds)
-    {
-        Debug.Log("Pausando audio");
-        audioSource.Pause();
-        yield return new WaitForSeconds(seconds);
-        Debug.Log("Reanudando audio");
-        audioSource.UnPause();
+        private IEnumerator PauseAndResumeAudio(float seconds)
+        {
+            Debug.Log("Pausando audio");
+            audioSource.Pause();
+            yield return new WaitForSeconds(seconds);
+            Debug.Log("Reanudando audio");
+            audioSource.UnPause();
+        }
     }
 }

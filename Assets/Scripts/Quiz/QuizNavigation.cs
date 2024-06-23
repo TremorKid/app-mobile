@@ -54,6 +54,7 @@ namespace Quiz
                 
                 MenuLogic.IsInitialQuiz = IsInitialQuiz;
                 SceneManager.LoadScene(MenuScene);
+                return;
             }
             else
             {
