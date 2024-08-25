@@ -38,6 +38,8 @@ public class Bag : MonoBehaviour
 	//Lista de las imagenes que se escanean
 	public List<GameObject> modelList;
 	private Dictionary<string, GameObject> modelDictionary;
+	public List<GameObject> firstAidKitList;
+	private Dictionary<string, GameObject> firstAidKitDictionary;
 	
 	//Variables para el control de audio
 	private float currentTime = 0f;
@@ -58,12 +60,20 @@ public class Bag : MonoBehaviour
 	private short contToothbrush = 0;
 	private short contWater = 0;
 	private short contWhistle = 0;
+
+	private short contAntibiotics = 0;
+	private short contBondages = 0;
+	private short contCotton = 0;
+	private short contMask = 0;
+	private short contGloves = 0;
+	private short contHydrogenPeroxide = 0;
+	private short contTape = 0;
 	
 	//Contador final
 	private short contEnd = 0;
 	
 	//Contador de imagenes escaneadas y texto de imagenes escaneadas
-	private short contScannedModels = 13;
+	private short contScannedModels = 1;
 	public TextMeshProUGUI scannedModelsText;
 	
 	//Condicional para saber si el audio termino
@@ -72,9 +82,26 @@ public class Bag : MonoBehaviour
 	//Imagen de conteo
 	public GameObject rawImageGameObject;
 	
+	// Referencia al componente RawImage
+	public RawImage rawImage;
+
+	// Nueva textura a asignar
+	public Texture2D newTexture;
+	
 	//Videos
 	public List<GameObject> videoList;
 	private Dictionary<string, GameObject> videoDictionary;
+	//Respuesta de la adivinanza es correcta
+	private bool answer = false;
+	
+	//Siguiente Adivinanza
+	private short contNext = 0;
+	
+	//Audio Adivinanza
+	private string riddleAudio;
+	
+	//Lista de imagenes
+	public List<GameObject> pictureList; 
 	
 	void Start()
 	{
@@ -100,6 +127,16 @@ public class Bag : MonoBehaviour
 			if (model != null)
 			{
 				modelDictionary[model.name] = model;
+			}
+		}
+			
+		firstAidKitDictionary = new Dictionary<string, GameObject>();
+		
+		foreach (GameObject firstAidKit in firstAidKitList)
+		{
+			if (firstAidKit != null)
+			{
+				firstAidKitDictionary[firstAidKit.name] = firstAidKit;
 			}
 		}
 		
@@ -286,6 +323,124 @@ public class Bag : MonoBehaviour
 				videoDictionary["WhistleVideo"].SetActive(false);
 				SetActiveModel(false, audioSource.clip.name);
 			}
+			
+			if (audioSource.clip.name == "Scene 3.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				foreach (KeyValuePair<string, GameObject> aux in firstAidKitDictionary)
+				{
+					aux.Value.SetActive(true);
+				}
+
+				rawImageGameObject.gameObject.SetActive(true);
+				scannedModelsText.gameObject.SetActive(true);
+				guideMeshObject.SetActive(false);
+			}
+
+			if (audioSource.clip.name == "Scene 3.2.Antibiotics.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Antibiotics.2" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Bondages.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Bondages.2" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Cotton.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Cotton.2" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Mask.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Mask.2" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Gloves.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Gloves.2" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.HydrogenPeroxide.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.HydrogenPeroxide.2" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Tape.1" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Tape.2" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
+			
+			if (audioSource.clip.name == "Scene 3.2.Not" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
+				SetActiveFirstAidKitModel();
+				//SetActiveModel(false, audioSource.clip.name);
+			}
 		}
 		
 	}
@@ -296,7 +451,8 @@ public class Bag : MonoBehaviour
 		currentTime = audioSource.time;
 
 		Debug.Log(currentTime);
-
+		
+		//Audio Scene 2.1
 		if (currentTime >= 9 && currentTime < 10 && contInteractive == 0)
 		{
 			audioSource.Pause();
@@ -306,6 +462,7 @@ public class Bag : MonoBehaviour
 
 		if (currentTime >= 27 && currentTime < 28 && contInteractive == 1)
 		{
+			pictureList[2].gameObject.SetActive(false);
 			audioSource.Pause();
 			buttons[1].gameObject.SetActive(true);
 			contInteractive++;
@@ -313,11 +470,210 @@ public class Bag : MonoBehaviour
 		
 		if (currentTime >= 45 && currentTime < 46 && contInteractive == 2)
 		{
+			pictureList[3].gameObject.SetActive(false);
+			pictureList[4].gameObject.SetActive(false);
+			pictureList[5].gameObject.SetActive(false);
+			pictureList[6].gameObject.SetActive(false);
+			pictureList[7].gameObject.SetActive(false);
+			
 			audioSource.Pause();
 			buttons[2].gameObject.SetActive(true);
 			contInteractive++;
 		}
-
+		
+		//Pictures 2.1
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 12 && currentTime < 13)
+		{
+			pictureList[0].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 16 && currentTime < 17)
+		{
+			pictureList[0].gameObject.SetActive(false);
+			pictureList[1].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 22 && currentTime < 23)
+		{
+			pictureList[1].gameObject.SetActive(false);
+			pictureList[2].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 32 && currentTime < 33)
+		{
+			pictureList[3].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 33 && currentTime < 34)
+		{
+			pictureList[4].gameObject.SetActive(true);
+			pictureList[5].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 34 && currentTime < 35)
+		{
+			pictureList[6].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 35 && currentTime < 36)
+		{
+			pictureList[7].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 53 && currentTime < 54)
+		{
+			pictureList[8].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 56 && currentTime < 57)
+		{
+			pictureList[9].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 61 && currentTime < 62)
+		{
+			pictureList[8].gameObject.SetActive(false);
+			pictureList[9].gameObject.SetActive(false);
+			pictureList[10].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.1 and 2.2" && currentTime >= 65 && currentTime < 66)
+		{
+			pictureList[10].gameObject.SetActive(false);
+		}
+		
+		//Pictures 2.4
+		
+		if (audioSource.clip.name == "Scene 2.4" && currentTime >= 17 && currentTime < 18)
+		{
+			pictureList[11].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.4" && currentTime >= 22 && currentTime < 23)
+		{
+			pictureList[12].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.4" && currentTime >= 29 && currentTime < 30)
+		{
+			pictureList[11].gameObject.SetActive(false);
+			pictureList[12].gameObject.SetActive(false);
+		}
+		
+		if (audioSource.clip.name == "Scene 2.4" && currentTime >= 34 && currentTime < 35)
+		{
+			pictureList[13].gameObject.SetActive(true);
+		}
+		
+		//Pictures 3.1
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 6 && currentTime < 7)
+		{
+			pictureList[14].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 10 && currentTime < 11)
+		{
+			pictureList[14].gameObject.SetActive(false);
+			pictureList[15].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 10 && currentTime < 11)
+		{
+			pictureList[14].gameObject.SetActive(false);
+			pictureList[15].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 14 && currentTime < 15)
+		{
+			pictureList[15].gameObject.SetActive(false);
+		}
+		
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 18 && currentTime < 19)
+		{
+			pictureList[16].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 23 && currentTime < 24)
+		{
+			pictureList[16].gameObject.SetActive(false);
+			pictureList[17].gameObject.SetActive(true);
+		}
+		
+		//Audio Scene 2.4
+		if (audioSource.clip.name == "Scene 2.4" && currentTime >= 4 && currentTime < 5 && contInteractive == 3)
+		{
+			audioSource.Pause();
+			buttons[6].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		if (audioSource.clip.name == "Scene 2.4" && currentTime >= 44 && currentTime < 45 && contInteractive == 4)
+		{
+			pictureList[13].gameObject.SetActive(false);
+			audioSource.Pause();
+			buttons[3].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		//Audio Scene 3.1
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 25 && currentTime < 26 && contInteractive == 5)
+		{
+			audioSource.Pause();
+			buttons[4].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 32 && currentTime < 33 && contInteractive == 6)
+		{
+			pictureList[17].gameObject.SetActive(false);
+			audioSource.Pause();
+			buttons[2].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		//Audio Scene 3.2
+		if (audioSource.clip.name == "Scene 3.2.Antibiotics.2" && currentTime >= 11 && currentTime < 12 && contInteractive == 7)
+		{
+			audioSource.Pause();
+			buttons[5].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		if (audioSource.clip.name == "Scene 3.2.Bondages.2" && currentTime >= 6 && currentTime < 7 && contInteractive == 8)
+		{
+			audioSource.Pause();
+			buttons[5].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		if (audioSource.clip.name == "Scene 3.2.Cotton.2" && currentTime >= 5 && currentTime < 6 && contInteractive == 9)
+		{
+			audioSource.Pause();
+			buttons[5].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		if (audioSource.clip.name == "Scene 3.2.Mask.2" && currentTime >= 6 && currentTime < 7 && contInteractive == 10)
+		{
+			audioSource.Pause();
+			buttons[5].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		if (audioSource.clip.name == "Scene 3.2.Gloves.2" && currentTime >= 7 && currentTime < 8 && contInteractive == 11)
+		{
+			audioSource.Pause();
+			buttons[5].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		if (audioSource.clip.name == "Scene 3.2.HydrogenPeroxide.2" && currentTime >= 7 && currentTime < 8 && contInteractive == 12)
+		{
+			audioSource.Pause();
+			buttons[5].gameObject.SetActive(true);
+			contInteractive++;
+		}
 	}
 
 	public void UnPauseAudioSource()
@@ -349,7 +705,191 @@ public class Bag : MonoBehaviour
 
 		modelDictionary[nameModel].SetActive(flag);
 	}
+	
+	public void SetActiveFirstAidKitModel()
+	{
+		foreach (KeyValuePair<string, GameObject> aux in firstAidKitDictionary)
+		{ 
+			aux.Value.SetActive(true);
+		}
+	}
 
+	//CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN DEL BOTIQUIN ++++++++++++++++++++++++++++++++++++++++++++++++++
+	//FUNCION CONDICIONAL SI SE ESCANEO Y NO ES LA CORRECTA
+	public void Validation(string audio, string model)
+	{
+		if (answer == true)
+		{
+			//videoDictionary[model].SetActive(true);
+			contScannedModels--;
+			contNext++;
+			SetAudioClipByName(audio);
+			audioSource.Play();
+		}
+		else
+		{
+			SetAudioClipByName("Scene 3.2.Not");
+			audioSource.Play();
+		}
+	}
+	public void IncreasesAntibioticsImageCounter()
+	{
+		if (audioFinishFlag == true)
+		{
+			if (contAntibiotics == 0 && riddleAudio == "Scene 3.2.Antibiotics.1")
+			{
+				contScannedModels--;
+				contNext++;
+				contAntibiotics++;
+				SetAudioClipByName("Scene 3.2.Antibiotics.2");
+				audioFinishFlag = false;
+				
+				audioSource.Play();
+			}
+			else
+			{
+				SetAudioClipByName("Scene 3.2.Not");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}
+		}
+		
+		//Validation("Scene 3.2.Antibiotics.2", "Antibiotics");
+	}
+
+	public void IncreasesBondagesImageCounter()
+	{
+		if (audioFinishFlag == true)
+		{
+			if (contBondages == 0 && riddleAudio == "Scene 3.2.Bondages.1")
+			{
+				contScannedModels--;
+				contNext++;
+				contBondages++;
+				SetAudioClipByName("Scene 3.2.Bondages.2");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}
+			else
+			{
+				SetAudioClipByName("Scene 3.2.Not");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}	
+		}
+	}
+	
+	public void IncreasesCottonImageCounter()
+	{
+		if (audioFinishFlag == true)
+		{
+			if (contCotton == 0 && riddleAudio == "Scene 3.2.Cotton.1")
+			{
+				contScannedModels--;
+				contNext++;
+				contCotton++;
+				SetAudioClipByName("Scene 3.2.Cotton.2");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}
+			else
+			{
+				SetAudioClipByName("Scene 3.2.Not");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}	
+		}
+	}
+	
+	public void IncreasesMaskImageCounter()
+	{
+		if (audioFinishFlag == true)
+		{
+			if (contMask == 0 && riddleAudio == "Scene 3.2.Mask.1")
+			{
+				contScannedModels--;
+				contNext++;
+				contMask++;
+				SetAudioClipByName("Scene 3.2.Mask.2");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}
+			else
+			{
+				SetAudioClipByName("Scene 3.2.Not");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}	
+		}
+	}
+	
+	public void IncreasesGlovesImageCounter()
+	{
+		if (audioFinishFlag == true)
+		{
+			if (contGloves == 0 && riddleAudio == "Scene 3.2.Gloves.1")
+			{
+				contScannedModels--;
+				contNext++;
+				contGloves++;
+				SetAudioClipByName("Scene 3.2.Gloves.2");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}
+			else
+			{
+				SetAudioClipByName("Scene 3.2.Not");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}	
+		}
+	}
+	
+	public void IncreasesHydrogenPeroxideImageCounter()
+	{
+		if (audioFinishFlag == true)
+		{
+			if (contHydrogenPeroxide == 0 && riddleAudio == "Scene 3.2.HydrogenPeroxide.1")
+			{
+				contScannedModels--;
+				contNext++;
+				contHydrogenPeroxide++;
+				SetAudioClipByName("Scene 3.2.HydrogenPeroxide.2");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}
+			else
+			{
+				SetAudioClipByName("Scene 3.2.Not");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}	
+		}
+	}
+	
+	public void IncreasesTapeImageCounter()
+	{
+		if (audioFinishFlag == true)
+		{
+			if (contTape == 0 && riddleAudio == "Scene 3.2.Tape.1")
+			{
+				contScannedModels--;
+				contNext++;
+				contTape++;
+				SetAudioClipByName("Scene 3.2.Tape.2");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}
+			else
+			{
+				SetAudioClipByName("Scene 3.2.Not");
+				audioFinishFlag = false;
+				audioSource.Play();
+			}	
+		}
+	}
+	
+	
 	// CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN
 	public void IncreaseChocolatesImageCounter()
 	{
@@ -857,9 +1397,147 @@ public class Bag : MonoBehaviour
 			scannedModelsText.gameObject.SetActive(false);
 			rawImageGameObject.gameObject.SetActive(false);
 			contEnd = 1;
-			
+			contScannedModels = 7;
+
 			//nextButton.SetActive(true);
 		}
+
+		if (!audioSource.isPlaying && contEnd == 1 && currentTime == 0)
+		{
+			rawImage.texture = newTexture;
+			SetAudioClipByName("Scene 3.1");
+			audioSource.Play();  
+			contEnd = 2;
+		}
+		
+		if (!audioSource.isPlaying && contEnd == 2 && contNext == 0 && currentTime == 0)
+		{
+			SetAudioClipByName("Scene 3.2.Antibiotics.1");
+			riddleAudio = "Scene 3.2.Antibiotics.1";
+			contEnd = 3;
+			audioFinishFlag = false;
+			audioSource.Play();
+		}
+		
+		if (!audioSource.isPlaying && contEnd == 3 && contNext == 1 && currentTime == 0)
+		{
+			contAntibiotics = 0;
+			contBondages = 0;
+	        contCotton = 0;
+	        contMask = 0;
+	        contGloves = 0;
+	        contHydrogenPeroxide = 0;
+	        contTape = 0;
+	        
+			SetAudioClipByName("Scene 3.2.Bondages.1");
+			riddleAudio = "Scene 3.2.Bondages.1";
+			contEnd = 4;
+			audioFinishFlag = false;
+			audioSource.Play();
+		}
+		
+		if (!audioSource.isPlaying && contEnd == 4 && contNext == 2 && currentTime == 0)
+		{
+			contAntibiotics = 0;
+			contBondages = 0;
+			contCotton = 0;
+			contMask = 0;
+			contGloves = 0;
+			contHydrogenPeroxide = 0;
+			contTape = 0;
+	        
+			SetAudioClipByName("Scene 3.2.Cotton.1");
+			riddleAudio = "Scene 3.2.Cotton.1";
+			contEnd = 5;
+			audioFinishFlag = false;
+			audioSource.Play();
+		}
+		
+		if (!audioSource.isPlaying && contEnd == 5 && contNext == 3 && currentTime == 0)
+		{
+			contAntibiotics = 0;
+			contBondages = 0;
+			contCotton = 0;
+			contMask = 0;
+			contGloves = 0;
+			contHydrogenPeroxide = 0;
+			contTape = 0;
+	        
+			SetAudioClipByName("Scene 3.2.Mask.1");
+			riddleAudio = "Scene 3.2.Mask.1";
+			contEnd = 6;
+			audioFinishFlag = false;
+			audioSource.Play();
+		}
+		
+		if (!audioSource.isPlaying && contEnd == 6 && contNext == 4 && currentTime == 0)
+		{
+			contAntibiotics = 0;
+			contBondages = 0;
+			contCotton = 0;
+			contMask = 0;
+			contGloves = 0;
+			contHydrogenPeroxide = 0;
+			contTape = 0;
+	        
+			SetAudioClipByName("Scene 3.2.Gloves.1");
+			riddleAudio = "Scene 3.2.Gloves.1";
+			contEnd = 7;
+			audioFinishFlag = false;
+			audioSource.Play();
+		}
+		
+		if (!audioSource.isPlaying && contEnd == 7 && contNext == 5 && currentTime == 0)
+		{
+			contAntibiotics = 0;
+			contBondages = 0;
+			contCotton = 0;
+			contMask = 0;
+			contGloves = 0;
+			contHydrogenPeroxide = 0;
+			contTape = 0;
+	        
+			SetAudioClipByName("Scene 3.2.HydrogenPeroxide.1");
+			riddleAudio = "Scene 3.2.HydrogenPeroxide.1";
+			contEnd = 8;
+			audioFinishFlag = false;
+			audioSource.Play();
+		}
+		
+		if (!audioSource.isPlaying && contEnd == 8 && contNext == 6 && currentTime == 0)
+		{
+			contAntibiotics = 0;
+			contBondages = 0;
+			contCotton = 0;
+			contMask = 0;
+			contGloves = 0;
+			contHydrogenPeroxide = 0;
+			contTape = 0;
+	        
+			SetAudioClipByName("Scene 3.2.Tape.1");
+			riddleAudio = "Scene 3.2.Tape.1";
+			contEnd = 9;
+			audioFinishFlag = false;
+			audioSource.Play();
+		}
+
+		if (!audioSource.isPlaying && contEnd == 9 && contNext == 7 && contScannedModels == 0)
+		{
+			foreach (KeyValuePair<string, GameObject> aux in firstAidKitDictionary)
+			{
+				aux.Value.SetActive(false);
+			}
+			
+			guideMeshObject.SetActive(true);
+			scannedModelsText.gameObject.SetActive(false);
+			rawImageGameObject.gameObject.SetActive(false);
+			contEnd = 10; 
+			SetAudioClipByName("Scene 3.3");
+			audioFinishFlag = false;
+			audioSource.Play();
+			nextButton.SetActive(true);
+		}
+		
 	}
 
 	public void LoadScene(string name)

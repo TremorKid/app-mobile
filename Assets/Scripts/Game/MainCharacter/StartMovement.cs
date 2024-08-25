@@ -65,6 +65,9 @@ public class StartMovement : MonoBehaviour
 	//Contador final
 	private short contEnd = 0;
 	
+	//Lista de imagenes
+	public List<GameObject> pictureList; 
+	
 	void Start()
 	{
 		//Sound
@@ -247,9 +250,39 @@ public class StartMovement : MonoBehaviour
 
 		if (currentTime >= 36 && currentTime < 37 && contInteractive == 1)
 		{
+			pictureList[1].gameObject.SetActive(false);
 			audioSource.Pause();
 			buttons[1].gameObject.SetActive(true);
 			contInteractive++;
+		}
+		
+		//Pictures Guide_Start_Learning
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 22 && currentTime < 23)
+		{
+			pictureList[0].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 30 && currentTime < 31)
+		{
+			pictureList[0].gameObject.SetActive(false);
+			pictureList[1].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 41 && currentTime < 42)
+		{
+			pictureList[2].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 45 && currentTime < 46)
+		{
+			pictureList[2].gameObject.SetActive(false);
+			pictureList[3].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 51 && currentTime < 52)
+		{
+			pictureList[3].gameObject.SetActive(false);
 		}
 
 	}
