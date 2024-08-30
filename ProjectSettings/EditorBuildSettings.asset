@@ -17,10 +17,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Learning.unity
     guid: 459f50bb418299f419961d5f9fee53c2
+  - enabled: 0
+    path: Assets/Scenes/Eliminated/Before_aux.unity
+    guid: a022230c05ae34944bbff661bd28571d
+  - enabled: 0
+    path: Assets/Scenes/Eliminated/During_aux.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Before.unity
-    guid: a022230c05ae34944bbff661bd28571d
+    guid: b4adae9813f3a164fa2c29e33a054b5f
   - enabled: 1
     path: Assets/Scenes/During.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  m_configObjects: {}
+    guid: d20694dc458447949a741bd0d638e480
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 704f0a372fe53a7458c3ede9b92b82bc, type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 660c82fe07cded94e9e9dece379eed66, type: 2}

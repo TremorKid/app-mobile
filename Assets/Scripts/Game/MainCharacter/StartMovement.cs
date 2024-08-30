@@ -51,11 +51,22 @@ public class StartMovement : MonoBehaviour
 	private short contStair = 0;
 	private short contWindow = 0;
 	private short contTelevision = 0;
-	private short contMeetingPoint = 0;
+	private short contBeam = 0;
 	private short contTable = 0;
 	
 	//Condicional para saber si el audio termino
 	private bool audioFinishFlag;
+	
+	//Contador de imagenes escaneadas y texto de imagenes escaneadas
+	private short contScannedModels = 13;
+	public TextMeshProUGUI scannedModelsText;
+	public GameObject rawImageGameObject;
+	
+	//Contador final
+	private short contEnd = 0;
+	
+	//Lista de imagenes
+	public List<GameObject> pictureList; 
 	
 	void Start()
 	{
@@ -154,12 +165,19 @@ public class StartMovement : MonoBehaviour
 					aux.Value.SetActive(true);
 				}
 
+				rawImageGameObject.gameObject.SetActive(true);
+				scannedModelsText.gameObject.SetActive(true);
 				guideMeshObject.SetActive(false);
+			}
+			
+			if (scannedModelsText.gameObject.activeSelf)
+			{
+				scannedModelsText.text = contScannedModels.ToString();
 			}
 			
 			//CUANDO ESCANEA LA IMAGEN DE LA COLUMNA, Y TERMINA SU AUDIO, SE HABILITA TODOS LOS MODELOS
 			//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
-			if (audioSource.clip.name == "Guide_BeamAndColumn" && currentTime == 0 && !audioSource.isPlaying)
+			if (audioSource.clip.name == "Guide_Column" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
@@ -207,11 +225,11 @@ public class StartMovement : MonoBehaviour
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
-			if (audioSource.clip.name == "Guide_MeetingPoint" && currentTime == 0 && !audioSource.isPlaying)
-			{
-				audioFinishFlag = true;
-				SetActiveModel(false, audioSource.clip.name);
-			}
+			//if (audioSource.clip.name == "Guide_Meetin2gPoint" && currentTime == 0 && !audioSource.isPlaying)
+			//{
+			//	audioFinishFlag = true;
+			//	SetActiveModel(false, audioSource.clip.name);
+			//}
 		}
 		
 	}
@@ -232,8 +250,47 @@ public class StartMovement : MonoBehaviour
 
 		if (currentTime >= 36 && currentTime < 37 && contInteractive == 1)
 		{
+			pictureList[1].gameObject.SetActive(false);
 			audioSource.Pause();
 			buttons[1].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		//Pictures Guide_Start_Learning
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 22 && currentTime < 23)
+		{
+			pictureList[0].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 30 && currentTime < 31)
+		{
+			pictureList[0].gameObject.SetActive(false);
+			pictureList[1].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 41 && currentTime < 42)
+		{
+			pictureList[2].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 45 && currentTime < 46)
+		{
+			pictureList[2].gameObject.SetActive(false);
+			pictureList[3].gameObject.SetActive(true);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 51 && currentTime < 52)
+		{
+			pictureList[3].gameObject.SetActive(false);
+		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 54 && currentTime < 55 && contInteractive == 2)
+		{
+			audioSource.Pause();
+			pictureList[4].gameObject.SetActive(true);
+			pictureList[5].gameObject.SetActive(true);
+			pictureList[6].gameObject.SetActive(true);
 			contInteractive++;
 		}
 
@@ -275,9 +332,10 @@ public class StartMovement : MonoBehaviour
 		if (contColumn == 0)
 		{
 			audioFinishFlag = false;
-			SetAudioClipByName("Guide_BeamAndColumn");
+			SetAudioClipByName("Guide_Column");
 			audioSource.Play();
 			contColumn++;
+			contScannedModels--;
 		}
 		else
 		{
@@ -285,7 +343,7 @@ public class StartMovement : MonoBehaviour
 			{
 				questionCanvas.SetActive(true);
 				
-				yesQuestionButtonDirectory["YesColumnAndBeamBtn"].SetActive(true);
+				yesQuestionButtonDirectory["YesColumnBtn"].SetActive(true);
 				
 				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Columnas y Vigas</b>?";
 			}
@@ -299,6 +357,7 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_FirstAidKit");
 			audioSource.Play();
 			contFirstAidKit++;
+			contScannedModels--;
 		}
 		else
 		{
@@ -320,6 +379,7 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_EmergencyBackpack");
 			audioSource.Play();
 			contEmergencyBackpack++;
+			contScannedModels--;
 		}
 		else
 		{
@@ -339,6 +399,7 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Window");
 			audioSource.Play();
 			contWindow++;
+			contScannedModels--;
 		}
 		else
 		{
@@ -358,6 +419,7 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Television");
 			audioSource.Play();
 			contTelevision++;
+			contScannedModels--;
 		}
 		else
 		{
@@ -377,6 +439,7 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Table");
 			audioSource.Play();
 			contTable++;
+			contScannedModels--;
 		}
 		else
 		{
@@ -396,6 +459,7 @@ public class StartMovement : MonoBehaviour
 			SetAudioClipByName("Guide_Stair");
 			audioSource.Play();
 			contStair++;
+			contScannedModels--;
 		}
 		else
 		{
@@ -407,31 +471,32 @@ public class StartMovement : MonoBehaviour
 			}
 		}
 	}
-	public void IncreaseMeetingPointImageCounter()
+	public void IncreaseBeamImageCounter()
 	{
-		if (contMeetingPoint== 0)
+		if (contBeam== 0)
 		{
 			audioFinishFlag = false;
-			SetAudioClipByName("Guide_MeetingPoint");
+			SetAudioClipByName("Guide_Beam");
 			audioSource.Play();
-			contMeetingPoint++;
+			contBeam++;
+			contScannedModels--;
 		}
 		else
 		{
 			if (audioFinishFlag == true)
 			{
 				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesMeetingPointBtn"].SetActive(true);
+				yesQuestionButtonDirectory["YesBeamBtn"].SetActive(true);
 				questionText.text = "Te gustaría repasar de nuevo la parte del <b>Punto de Reunión</b>?";	
 			}
 		}
 	}
 	
 	//Acciones de los botones SI de las preguntas
-	public void YesButtonColumnAndBeam()
+	public void YesButtonColumn()
 	{
 		audioFinishFlag = false;
-		SetAudioClipByName("Guide_BeamAndColumn");
+		SetAudioClipByName("Guide_Column");
 		audioSource.Play();
 		questionCanvas.SetActive(false);
 		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
@@ -532,10 +597,10 @@ public class StartMovement : MonoBehaviour
 		modelDictionary["Stair"].SetActive(true);
 	}
 	
-	public void YesButtonMeetingPoint()
+	public void YesButtonBeam()
 	{
 		audioFinishFlag = false;
-		SetAudioClipByName("Guide_MeetingPoint");
+		SetAudioClipByName("Guide_Beam");
 		audioSource.Play();
 		questionCanvas.SetActive(false);
 		
@@ -544,16 +609,23 @@ public class StartMovement : MonoBehaviour
 			aux.Value.SetActive(false);
 		}
 
-		modelDictionary["MeetingPoint"].SetActive(true);
+		modelDictionary["Beam"].SetActive(true);
 	}
 
 	//Finalización de la interacción y que pase al siguiente
 	private void FinishLearningScene()
 	{
-		if (contInteractive >= 1 && contColumn >= 1 && contFirstAidKit >= 1 && contEmergencyBackpack >= 1 &&
-		    contStair >= 1 && contWindow >= 1 && contTelevision >= 1 && contMeetingPoint >= 1 && contTable >= 1)
+		if (contScannedModels == 0 && !audioSource.isPlaying && contEnd == 0)
 		{
+			foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
+			{
+				aux.Value.SetActive(false);
+			}
 			nextButton.SetActive(true);
+			guideMeshObject.SetActive(true);
+			scannedModelsText.gameObject.SetActive(false);
+			rawImageGameObject.gameObject.SetActive(false);
+			contEnd = 1;
 		}
 	}
 
