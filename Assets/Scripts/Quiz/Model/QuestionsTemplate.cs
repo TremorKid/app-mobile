@@ -22,8 +22,6 @@ namespace Quiz.Model
         
         public string alternative4;
         
-        public string alternative5;
-        
         public string answer;
     }
 }
