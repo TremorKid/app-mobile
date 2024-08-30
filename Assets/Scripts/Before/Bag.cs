@@ -60,6 +60,7 @@ public class Bag : MonoBehaviour
 	private short contToothbrush = 0;
 	private short contWater = 0;
 	private short contWhistle = 0;
+	private short contFirstAidKit = 0;
 
 	private short contAntibiotics = 0;
 	private short contBondages = 0;
@@ -321,6 +322,12 @@ public class Bag : MonoBehaviour
 			{
 				audioFinishFlag = true;
 				videoDictionary["WhistleVideo"].SetActive(false);
+				SetActiveModel(false, audioSource.clip.name);
+			}
+
+			if (audioSource.clip.name == "Scene 2.3.FirstAidKit" && currentTime == 0 && !audioSource.isPlaying)
+			{
+				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
 			}
 			
@@ -1173,6 +1180,27 @@ public class Bag : MonoBehaviour
 			}
 		}
 	}
+
+	public void IncreaseFirstAidKitImageCounter()
+	{
+		if (contFirstAidKit == 0)
+		{
+			audioFinishFlag = false;
+			SetAudioClipByName("Scene 2.3.FirstAidKit");
+			audioSource.Play();
+			contFirstAidKit++;
+			contScannedModels--;
+		}
+		else
+		{
+			if (audioFinishFlag == true)
+			{
+				questionCanvas.SetActive(true);
+				yesQuestionButtonDirectory["YesFirstAidKitBtn"].SetActive(true);
+				questionText.text = "Te gustaría repasar de nuevo la parte del <b>Botiquín</b>?";	
+			}
+		}
+	}
 	
 	//Acciones de los botones SI de las preguntas
 	public void YesButtonChocolates()
@@ -1381,6 +1409,22 @@ public class Bag : MonoBehaviour
 		modelDictionary["Whistle"].SetActive(true);
 		videoDictionary["WhistleVideo"].SetActive(true);
 	}
+
+	public void YesButtonFirstAidKit()
+	{
+		audioFinishFlag = false;
+		SetAudioClipByName("Scene 2.3.FirstAidKit");
+		audioSource.Play();
+		questionCanvas.SetActive(false);
+		
+		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
+		{ 
+			aux.Value.SetActive(false);
+		}
+
+		modelDictionary["FirstAidKit"].SetActive(true);
+	}
+
 	//Finalización de la interacción y que pase al siguiente
 	private void FinishLearningScene()
 	{

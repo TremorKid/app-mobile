@@ -284,6 +284,15 @@ public class StartMovement : MonoBehaviour
 		{
 			pictureList[3].gameObject.SetActive(false);
 		}
+		
+		if (audioSource.clip.name == "Guide_Start_Learning" && currentTime >= 54 && currentTime < 55 && contInteractive == 2)
+		{
+			audioSource.Pause();
+			pictureList[4].gameObject.SetActive(true);
+			pictureList[5].gameObject.SetActive(true);
+			pictureList[6].gameObject.SetActive(true);
+			contInteractive++;
+		}
 
 	}
 

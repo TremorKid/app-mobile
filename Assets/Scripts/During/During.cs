@@ -21,7 +21,6 @@ public class During : MonoBehaviour
 	public TextMeshProUGUI questionText;
 	public List<GameObject> yesQuestionButtonList;
 	private Dictionary<string, GameObject> yesQuestionButtonDirectory;
-	public Button noQuestionButton;
 	public GameObject questionCanvas;
 
 	//Lista de botones para la interacción en InteractionCanvas
@@ -47,7 +46,7 @@ public class During : MonoBehaviour
 	//Contadores para saber cuantas veces se escaneo la imagen
 	private short contBeam = 0;
 	private short contColumn = 0;
-	private short contEmeregencyBackpack = 0;
+	private short contEmergencyBackpack = 0;
 	private short contFirstAidKit = 0;
 	private short contTelevision = 0;
 	private short contTable = 0;
@@ -196,7 +195,7 @@ public class During : MonoBehaviour
 				SetActiveModel(false, audioSource.clip.name);
 			}
 
-			if (audioSource.clip.name == "Scene 4.2.EmeregencyBackpack" && currentTime == 0 && !audioSource.isPlaying)
+			if (audioSource.clip.name == "Scene 4.2.EmergencyBackpack" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
@@ -258,38 +257,48 @@ public class During : MonoBehaviour
 		}
 		
 		//Audio Scene 4.3
-		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 14 && currentTime < 15)
+		
+		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 4 && currentTime < 5 && contInteractive == 1)
+		{
+			audioSource.Pause();
+			buttons[3].gameObject.SetActive(true);
+			contInteractive++;
+		}
+		
+		//Picture Audio Scene 4.3
+		
+		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 21 && currentTime < 22)
 		{
 			pictureList[0].gameObject.SetActive(true);
 		}
 		
-		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 24 && currentTime < 25)
+		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 28 && currentTime < 29)
 		{
 			pictureList[0].gameObject.SetActive(false);
 		}
 		
-		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 25 && currentTime < 26)
+		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 31 && currentTime < 32)
 		{
 			pictureList[1].gameObject.SetActive(true);
 		}
 		
-		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 37 && currentTime < 38)
+		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 43 && currentTime < 44)
 		{
 			pictureList[1].gameObject.SetActive(false);
 		}
 		
-		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 38 && currentTime < 39)
+		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 45 && currentTime < 46)
 		{
 			pictureList[2].gameObject.SetActive(true);
 		}
 		
-		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 52 && currentTime < 53 && contInteractive == 1)
+		if (audioSource.clip.name == "Scene 4.3" && currentTime >= 59 && currentTime < 60 && contInteractive == 2)
 		{
 			pictureList[2].gameObject.SetActive(false);
 			audioSource.Pause();
 			buttons[1].gameObject.SetActive(true);
 			buttons[2].gameObject.SetActive(true);
-			contInteractive = 2;
+			contInteractive = 3;
 		}
 
 	}
@@ -380,21 +389,21 @@ public class During : MonoBehaviour
 			}
 		}
 	}
-	public void IncreaseEmeregencyBackpackImageCounter()
+	public void IncreaseEmergencyBackpackImageCounter()
 	{
-		if (contEmeregencyBackpack == 0)
+		if (contEmergencyBackpack == 0)
 		{
 			audioFinishFlag = false;
-			SetAudioClipByName("Scene 4.2.EmeregencyBackpack");
+			SetAudioClipByName("Scene 4.2.EmergencyBackpack");
 			audioSource.Play();
-			contEmeregencyBackpack++;
+			contEmergencyBackpack++;
 		}
 		else
 		{
 			if (audioFinishFlag == true)
 			{
 				questionCanvas.SetActive(true);
-				yesQuestionButtonDirectory["YesEmeregencyBackpackBtn"].SetActive(true);
+				yesQuestionButtonDirectory["YesEmergencyBackpackBtn"].SetActive(true);
 				questionText.text = "¿Te gustaría repetir la parte de la mochila de emergencia?";	
 			}
 		}
@@ -526,10 +535,10 @@ public class During : MonoBehaviour
 		modelDictionary["Column"].SetActive(true);
 	}
 	
-	public void YesButtonEmeregencyBackpack()
+	public void YesButtonEmergencyBackpack()
 	{
 		audioFinishFlag = false;
-		SetAudioClipByName("Scene 4.2.EmeregencyBackpack");
+		SetAudioClipByName("Scene 4.2.EmergencyBackpack");
 		audioSource.Play();
 		questionCanvas.SetActive(false);
 		
@@ -538,7 +547,7 @@ public class During : MonoBehaviour
 			aux.Value.SetActive(false);
 		}
 
-		modelDictionary["EmeregencyBackpack"].SetActive(true);
+		modelDictionary["EmergencyBackpack"].SetActive(true);
 	}
 	
 	public void YesButtonTelevision()
@@ -632,8 +641,6 @@ public class During : MonoBehaviour
 			contEnd = 1;
 			scannedModelsText.gameObject.SetActive(false);
 			rawImageGameObject.gameObject.SetActive(false);
-
-			//nextButton.SetActive(true);
 		}
 
 		if (!audioSource.isPlaying && contEnd == 2 && audioEnd == false)
@@ -646,7 +653,7 @@ public class During : MonoBehaviour
 		if (audioSource.clip.name == "Scene 4.4" && currentTime == 0 && !audioSource.isPlaying && audioEnd == true)
 		{
 			guideMeshObject.SetActive(false);
-			//LoadScene();
+			nextButton.SetActive(true);
 		}
 		
 	}
