@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="meetpoint" size="0.210000 0.301889" />
+    <ImageTarget name="corner" size="0.210000 0.301889" />
+    <ImageTarget name="table" size="0.210000 0.301889" />
+    <ImageTarget name="column" size="0.210000 0.301889" />
+    <ImageTarget name="bag" size="0.210000 0.301889" />
+    <ImageTarget name="hopital" size="0.210000 0.301889" />
+    <ImageTarget name="stairs" size="0.210000 0.301889" />
+    <ImageTarget name="window" size="0.210000 0.301889" />
+    <ImageTarget name="television" size="0.210000 0.301889" />
+    <ImageTarget name="home" size="0.210000 0.301889" />
+  </Tracking>
+</QCARConfig>

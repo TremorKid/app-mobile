@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig>
+  <Tracking>
+    <ImageTarget name="FirstAidKit_EmergencyBackPack" size="1.000000 1.001764" />
+    <ImageTarget name="Tape" size="1.000000 1.000000" />
+    <ImageTarget name="Mask" size="1.000000 1.008147" />
+    <ImageTarget name="HydrogenPeroxide" size="1.000000 0.992634" />
+    <ImageTarget name="Gloves" size="1.000000 1.001764" />
+    <ImageTarget name="Cotton" size="1.000000 1.004040" />
+    <ImageTarget name="Bandage" size="1.000000 1.004057" />
+    <ImageTarget name="Antibiotics" size="1.000000 1.010582" />
+    <ImageTarget name="PlasticBags" size="1.000000 1.005291" />
+    <ImageTarget name="Chocolates" size="1.000000 1.005348" />
+    <ImageTarget name="Whistle" size="1.000000 1.000000" />
+    <ImageTarget name="ToiletPaper" size="1.000000 0.994709" />
+    <ImageTarget name="fleeceblanket" size="1.000000 0.994220" />
+    <ImageTarget name="cannedfood" size="1.000000 1.002805" />
+    <ImageTarget name="Toothbrush_v2" size="1.000000 1.006329" />
+    <ImageTarget name="StillWaterBottle" size="1.000000 0.993750" />
+    <ImageTarget name="Rope" size="1.000000 0.993750" />
+    <ImageTarget name="PortableRadio" size="1.000000 0.987578" />
+    <ImageTarget name="MultipurposeBlade" size="1.000000 0.993750" />
+    <ImageTarget name="Lighter" size="1.000000 0.981481" />
+    <ImageTarget name="HandTowel" size="1.000000 1.000000" />
+    <ImageTarget name="Flashlight" size="1.000000 0.990654" />
+    <ImageTarget name="AntibacterialGel" size="1.000000 0.996865" />
+    <ImageTarget name="ToothBrush" size="1.000000 0.993333" />
+    <ImageTarget name="MeetingPoint" size="1.000000 1.547649" />
+    <ImageTarget name="Stair" size="1.000000 1.547649" />
+    <ImageTarget name="Table" size="1.000000 1.547649" />
+    <ImageTarget name="Beam" size="1.000000 1.547649" />
+    <ImageTarget name="Column" size="1.000000 1.547649" />
+    <ImageTarget name="Window" size="1.000000 1.547649" />
+    <ImageTarget name="Television" size="1.000000 1.547649" />
+    <ImageTarget name="FirstAidKit" size="1.000000 1.547649" />
+    <ImageTarget name="EmergencyBackpack" size="1.000000 1.547649" />
+    <ImageTarget name="group31" size="1.000000 1.408306" />
+    <ImageTarget name="group3" size="1.000000 1.437568" />
+  </Tracking>
+</QCARConfig>
