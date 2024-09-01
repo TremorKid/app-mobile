@@ -28,7 +28,7 @@ public class ImageScanning : MonoBehaviour
     
     void Update()
     {
-        QuizNavigation.IsInitialQuiz = false;
+        QuizNavigation.isInitialQuiz = false;
         DuringSceneEnding("Quiz");
     }
     

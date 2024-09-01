@@ -29,7 +29,7 @@ namespace Login
             _appService.GetGeneralParameterValue(GeneralParameterEnum.QuizTemplate, value =>
             {
                 try {
-                    QuizNavigation.QuestionsTemp = JsonConvert.DeserializeObject<QuestionsTemplate>(value);
+                    QuizNavigation.questionsTemplate = JsonConvert.DeserializeObject<QuestionsTemplate>(value);
                 } catch (Exception e) {
                     Debug.LogError("Error al deserializar JSON: " + e.Message);
                 }
@@ -44,7 +44,7 @@ namespace Login
         public void SendName()
         {
             PlayerPrefs.SetString(UserName, inputText.text);
-            QuizNavigation.IsInitialQuiz = true;
+            QuizNavigation.isInitialQuiz = true;
             SceneManager.LoadScene(QuizScene);
         }
         

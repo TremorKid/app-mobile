@@ -13,21 +13,20 @@ namespace Quiz
 {
     public class QuizNavigation : MonoBehaviour
     {
-        private AppService _appService;
-        private QuizBean _quizBeanSend;
+        private AppService appService;
+        private QuizBean quizBeanSend;
         
         // Components UI
-        public static QuestionsTemplate QuestionsTemp;
-        public static bool IsInitialQuiz;
+        public static QuestionsTemplate questionsTemplate;
+        public static bool isInitialQuiz;
         public TextMeshProUGUI textMeshQuestion;
         public Button meshOption1Btn;
         public Button meshOption2Btn;
         public Button meshOption3Btn;
         public Button meshOption4Btn;
-        public Button meshOption5Btn;
         public Button nextBtn;
         public Button prevBtn;
-        private int _index;
+        private int index;
         
         private const string TextSendBtn = "Enviar";
         private const string MenuScene = "Menu";
@@ -35,56 +34,56 @@ namespace Quiz
         
         private void Start()
         {
-            _quizBeanSend = new QuizBean();
-            _appService = gameObject.AddComponent<AppService>();
-            _index = 0;
+            quizBeanSend = new QuizBean();
+            appService = gameObject.AddComponent<AppService>();
+            index = 0;
             
-            UpdateText(_index);
+            UpdateText();
             prevBtn.gameObject.SetActive(false);
         }
         
         public void IncrementIndex()
         {
-            ++_index;
-            if (_index == 10)
+            ++index;
+            if (index == 10)
             {
-                _quizBeanSend.userName = PlayerPrefs.GetString("userName");
-                _quizBeanSend.isFirstQuiz = IsInitialQuiz;
-                SendQuiz(JsonUtility.ToJson(_quizBeanSend));
+                quizBeanSend.userName = PlayerPrefs.GetString("userName");
+                quizBeanSend.isFirstQuiz = isInitialQuiz;
+                SendQuiz(JsonUtility.ToJson(quizBeanSend));
                 
-                MenuLogic.IsInitialQuiz = IsInitialQuiz;
+                MenuLogic.IsInitialQuiz = isInitialQuiz;
                 SceneManager.LoadScene(MenuScene);
                 return;
             }
             else
             {
-                UpdateText(_index);
-                if (_index == 9)
+                UpdateText();
+                if (index == 9)
                 {
                     nextBtn.GetComponentInChildren<TextMeshProUGUI>().text = TextSendBtn;
                     nextBtn.image.color = SharedTools.ChangeColor("send");
                 }
             }
 
-            if (_index != 0)
+            if (index != 0)
             {
                 prevBtn.gameObject.SetActive(true);
             }
 
-            OrganiceAlternatives(_index);
+            OrganizeAlternatives();
             
             ResetButtonColor();
         }
         
         public void DecrementIndex()
         {
-            --_index;
-            UpdateText(_index);
-            if (_index == 0)
+            --index;
+            UpdateText();
+            if (index == 0)
             {
                 prevBtn.gameObject.SetActive(false);
             }
-            OrganiceAlternatives(_index);
+            OrganizeAlternatives();
             ResetButtonColor();
         }
         
@@ -92,40 +91,40 @@ namespace Quiz
         {
             ResetButtonColor();
             var optionTextBtn = optionBtn.GetComponentInChildren<TextMeshProUGUI>().text;
-            switch (_index)
+            switch (index)
             {
                 case 0:
-                    _quizBeanSend.quiz1 = optionTextBtn;
+                    quizBeanSend.quiz1 = optionTextBtn;
                     break;
                 case 1:
-                    _quizBeanSend.quiz2 = optionTextBtn;
+                    quizBeanSend.quiz2 = optionTextBtn;
                     break;
                 case 2:
-                    _quizBeanSend.quiz3 = optionTextBtn;
+                    quizBeanSend.quiz3 = optionTextBtn;
                     break;
                 case 3:
-                    _quizBeanSend.quiz4 = optionTextBtn;
+                    quizBeanSend.quiz4 = optionTextBtn;
                     break;
                 case 4:
-                    _quizBeanSend.quiz5 = optionTextBtn;
+                    quizBeanSend.quiz5 = optionTextBtn;
                     break;
                 case 5:
-                    _quizBeanSend.quiz6 = optionTextBtn;
+                    quizBeanSend.quiz6 = optionTextBtn;
                     break;
                 case 6:
-                    _quizBeanSend.quiz7 = optionTextBtn;
+                    quizBeanSend.quiz7 = optionTextBtn;
                     break;
                 case 7:
-                    _quizBeanSend.quiz8 = optionTextBtn;
+                    quizBeanSend.quiz8 = optionTextBtn;
                     break;
                 case 8:
-                    _quizBeanSend.quiz9 = optionTextBtn;
+                    quizBeanSend.quiz9 = optionTextBtn;
                     break;
                 case 9:
-                    _quizBeanSend.quiz10 = optionTextBtn;
+                    quizBeanSend.quiz10 = optionTextBtn;
                     break;
                 default:
-                    Debug.LogError("Opción no encontrada." + _index);
+                    Debug.LogError("Opción no encontrada." + index);
                     break;
             }
 
@@ -136,7 +135,7 @@ namespace Quiz
         {
             try
             {
-                _appService.SendQuiz(sendQuizBean);
+                appService.SendQuiz(sendQuizBean);
             }
             catch (Exception e)
             {
@@ -144,25 +143,24 @@ namespace Quiz
             }
         }
         
-        private void UpdateText(int index)
+        private void UpdateText()
         {
-            textMeshQuestion.text = QuestionsTemp.questions[index].question;
-            meshOption1Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative1;
-            meshOption2Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative2;
-            meshOption3Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative3;
-            meshOption4Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative4;
-            meshOption5Btn.GetComponentInChildren<TextMeshProUGUI>().text = QuestionsTemp.questions[index].alternative5;
+            textMeshQuestion.text = questionsTemplate.questions[index].question;
+            meshOption1Btn.GetComponentInChildren<TextMeshProUGUI>().text = questionsTemplate.questions[index].alternative1;
+            meshOption2Btn.GetComponentInChildren<TextMeshProUGUI>().text = questionsTemplate.questions[index].alternative2;
+            meshOption3Btn.GetComponentInChildren<TextMeshProUGUI>().text = questionsTemplate.questions[index].alternative3;
+            meshOption4Btn.GetComponentInChildren<TextMeshProUGUI>().text = questionsTemplate.questions[index].alternative4;
         }
         
-        private void OrganiceAlternatives(int index)
+        private void OrganizeAlternatives()
         {
+            Debug.Log(questionsTemplate.questions[index].alternative3);
             ResetPositionAlternatives();
-            if (QuestionsTemp.questions[index].alternative3 != "") return;
-            meshOption1Btn.transform.localPosition = new Vector3(-90, -70, 0);
-            meshOption2Btn.transform.localPosition = new Vector3(90, -70, 0);
+            if (questionsTemplate.questions[index].alternative3 != null) return;
+            meshOption1Btn.transform.localPosition = new Vector3(-90, 0, 0);
+            meshOption2Btn.transform.localPosition = new Vector3(90, 0, 0);
             meshOption3Btn.gameObject.SetActive(false);
             meshOption4Btn.gameObject.SetActive(false);
-            meshOption5Btn.gameObject.SetActive(false);
         }
         
         private void ResetPositionAlternatives()
@@ -171,7 +169,6 @@ namespace Quiz
             meshOption2Btn.transform.localPosition = new Vector3(-90, -70, 0);
             meshOption3Btn.gameObject.SetActive(true);
             meshOption4Btn.gameObject.SetActive(true);
-            meshOption5Btn.gameObject.SetActive(true);
         }
 
         private void ResetButtonColor()
@@ -181,7 +178,6 @@ namespace Quiz
             meshOption2Btn.image.color = color;
             meshOption3Btn.image.color = color;
             meshOption4Btn.image.color = color;
-            meshOption5Btn.image.color = color;
         }
 
     }
