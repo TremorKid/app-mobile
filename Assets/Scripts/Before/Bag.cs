@@ -74,7 +74,7 @@ public class Bag : MonoBehaviour
 	private short contEnd = 0;
 	
 	//Contador de imagenes escaneadas y texto de imagenes escaneadas
-	private short contScannedModels = 1;
+	private short contScannedModels = 4;
 	public TextMeshProUGUI scannedModelsText;
 	
 	//Condicional para saber si el audio termino
@@ -102,10 +102,33 @@ public class Bag : MonoBehaviour
 	private string riddleAudio;
 	
 	//Lista de imagenes
-	public List<GameObject> pictureList; 
+	public List<GameObject> pictureList;
+
+	private bool backpackChocolates = false;
+	private bool backpackCannedFood = false;
+	private bool backpackAntibacterialGel = false;
+	private bool backpackFleeceBlanket = false;
+	private bool backpackPlasticBags = false;
+	private bool backpackHandTowel = false;
+	private bool backpackPolyesterRopes = false;
+	private bool backpackFlashlight = false;
+	private bool backpackPortableRadio = false;
+	private bool backpackToiletPaper = false;
+	private bool backpackToothbrush = false;
+	private bool backpackWater = false;
+	private bool backpackWhistle = false;
+	private bool backpackFirstAidKit = false;
+	private bool backpackActive = false;
+	private Animator backpackAnimator;
+	public GameObject backpack;
+	private bool backpackInteractive = false;
+	public RawImage backpackImage;
+	
 	
 	void Start()
 	{
+		backpackAnimator = backpack.GetComponent<Animator>();
+			
 		//Sound
 		audioSource = GetComponent<AudioSource>();
 		InvokeRepeating("CheckAudioTime", 0f, 1f);
@@ -224,6 +247,7 @@ public class Bag : MonoBehaviour
 
 				rawImageGameObject.gameObject.SetActive(true);
 				scannedModelsText.gameObject.SetActive(true);
+				backpack.SetActive(true);
 				guideMeshObject.SetActive(false);
 			}
 
@@ -238,97 +262,195 @@ public class Bag : MonoBehaviour
 			{
 				audioFinishFlag = true;
 				videoDictionary["ChocolatesVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				 
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				//SetActiveModel(false, audioSource.clip.name);
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.CannedFood" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["CannedFoodVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				 
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.AntibacterialGel" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["AntibacterialGelVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.FleeceBlanket" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["FleeceBlanketVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.Flashlight" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["FlashlightVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.HandTowel" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["HandTowelVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.PlasticBags" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["PlasticBagsVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.PolyesterRopes" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["PolyesterRopesVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.PortableRadio" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["PortableRadioVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.ToiletPaper" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["ToiletPaperVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.Toothbrush" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["ToothbrushVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.Water" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["WaterVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 2.3.Whistle" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				videoDictionary["WhistleVideo"].SetActive(false);
-				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 
 			if (audioSource.clip.name == "Scene 2.3.FirstAidKit" && currentTime == 0 && !audioSource.isPlaying)
 			{
 				audioFinishFlag = true;
 				SetActiveModel(false, audioSource.clip.name);
+				SetActiveEmergencyBackpackModel(false);
+				
+				if (backpackActive == true)
+				{
+					backpackAnimator.SetInteger("Action", 1);
+				}
+				
+				 
 			}
 			
 			if (audioSource.clip.name == "Scene 3.1" && currentTime == 0 && !audioSource.isPlaying)
@@ -720,6 +842,14 @@ public class Bag : MonoBehaviour
 			aux.Value.SetActive(true);
 		}
 	}
+	
+	public void SetActiveEmergencyBackpackModel(bool active)
+	{
+		foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
+		{ 
+			aux.Value.SetActive(active);
+		}
+	}
 
 	//CONTEO DE LAS VECES QUE SE HA ESCANEADO UNA IMAGEN DEL BOTIQUIN ++++++++++++++++++++++++++++++++++++++++++++++++++
 	//FUNCION CONDICIONAL SI SE ESCANEO Y NO ES LA CORRECTA
@@ -906,8 +1036,10 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.Chocolates");
 			audioSource.Play();
 			contChocolates++;
-			contScannedModels--;
 			videoDictionary["ChocolatesVideo"].SetActive(true);
+			backpackActive = true;
+			backpackChocolates = true;
+			contScannedModels--;
 		}
 		else
 		{
@@ -930,6 +1062,8 @@ public class Bag : MonoBehaviour
 			audioSource.Play();
 			contCannedFood++;
 			contScannedModels--;
+			backpackActive = true;
+			backpackCannedFood = true;
 			videoDictionary["CannedFoodVideo"].SetActive(true);
 		}
 		else
@@ -953,6 +1087,8 @@ public class Bag : MonoBehaviour
 			audioSource.Play();
 			contAntibacterialGel++;
 			contScannedModels--;
+			backpackActive = true;
+			backpackAntibacterialGel = true;
 			videoDictionary["AntibacterialGelVideo"].SetActive(true);
 		}
 		else
@@ -973,6 +1109,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.PlasticBags");
 			audioSource.Play();
 			contPlasticBags++;
+			backpackActive = true;
+			backpackPlasticBags = true;
 			contScannedModels--;
 			videoDictionary["PlasticBagsVideo"].SetActive(true);
 		}
@@ -994,6 +1132,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.HandTowel");
 			audioSource.Play();
 			contHandTowel++;
+			backpackActive = true;
+			backpackHandTowel = true;
 			contScannedModels--;
 			videoDictionary["HandTowelVideo"].SetActive(true);
 		}
@@ -1015,6 +1155,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.Flashlight");
 			audioSource.Play();
 			contFlashlight++;
+			backpackActive = true;
+			backpackFlashlight = true;
 			contScannedModels--;
 			videoDictionary["FlashlightVideo"].SetActive(true);
 		}
@@ -1036,6 +1178,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.FleeceBlanket");
 			audioSource.Play();
 			contFleeceBlanket++;
+			backpackActive = true;
+			backpackFleeceBlanket = true;
 			contScannedModels--;
 			videoDictionary["FleeceBlanketVideo"].SetActive(true);
 		}
@@ -1057,6 +1201,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.PolyesterRopes");
 			audioSource.Play();
 			contPolyesterRopes++;
+			backpackActive = true;
+			backpackPolyesterRopes = true;
 			contScannedModels--;
 			videoDictionary["PolyesterRopesVideo"].SetActive(true);
 		}
@@ -1079,6 +1225,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.PortableRadio");
 			audioSource.Play();
 			contPortableRadio++;
+			backpackActive = true;
+			backpackPortableRadio = true;
 			contScannedModels--;
 			videoDictionary["PortableRadioVideo"].SetActive(true);
 		}
@@ -1101,6 +1249,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.ToiletPaper");
 			audioSource.Play();
 			contToiletPaper++;
+			backpackActive = true;
+			backpackToiletPaper = true;
 			contScannedModels--;
 			videoDictionary["ToiletPaperVideo"].SetActive(true);
 		}
@@ -1123,6 +1273,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.Toothbrush");
 			audioSource.Play();
 			contToothbrush++;
+			backpackActive = true;
+			backpackToothbrush = true;
 			contScannedModels--;
 			videoDictionary["ToothbrushVideo"].SetActive(true);
 		}
@@ -1145,6 +1297,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.Water");
 			audioSource.Play();
 			contWater++;
+			backpackActive = true;
+			backpackWater = true;
 			contScannedModels--;
 			videoDictionary["WaterVideo"].SetActive(true);
 		}
@@ -1167,6 +1321,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.Whistle");
 			audioSource.Play();
 			contWhistle++;
+			backpackActive = true;
+			backpackWhistle = true;
 			contScannedModels--;
 			videoDictionary["WhistleVideo"].SetActive(true);
 		}
@@ -1189,6 +1345,8 @@ public class Bag : MonoBehaviour
 			SetAudioClipByName("Scene 2.3.FirstAidKit");
 			audioSource.Play();
 			contFirstAidKit++;
+			backpackActive = true;
+			backpackFirstAidKit = true;
 			contScannedModels--;
 		}
 		else
@@ -1587,5 +1745,33 @@ public class Bag : MonoBehaviour
 	public void LoadScene(string name)
 	{
 		SceneManager.LoadScene(name);
+	}
+
+	public void ShowBackpack()
+	{
+		if (backpackActive == true)
+		{
+			BackpackSave();
+		}
+		else
+		{
+			backpackInteractive = !backpackInteractive;
+			if (backpackInteractive == false)
+			{
+				backpackImage.gameObject.SetActive(false);
+			}
+			else
+			{
+				backpackImage.gameObject.SetActive(true);
+			}
+		}
+	}
+
+	private void BackpackSave()
+	{
+		audioSource.clip.name = "nothing";
+		backpackActive = false;
+		SetActiveEmergencyBackpackModel(true);
+		backpackAnimator.SetInteger("Action", 0);
 	}
 }
