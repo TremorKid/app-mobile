@@ -51,7 +51,7 @@ namespace Quiz
                 quizBeanSend.isFirstQuiz = isInitialQuiz;
                 SendQuiz(JsonUtility.ToJson(quizBeanSend));
                 
-                MenuLogic.IsInitialQuiz = isInitialQuiz;
+                MenuLogic.isInitialQuiz = isInitialQuiz;
                 SceneManager.LoadScene(MenuScene);
                 return;
             }
@@ -154,7 +154,6 @@ namespace Quiz
         
         private void OrganizeAlternatives()
         {
-            Debug.Log(questionsTemplate.questions[index].alternative3);
             ResetPositionAlternatives();
             if (questionsTemplate.questions[index].alternative3 != null) return;
             meshOption1Btn.transform.localPosition = new Vector3(-90, 0, 0);

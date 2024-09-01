@@ -12,21 +12,22 @@ namespace Login
 {
     public class Login : MonoBehaviour
     {
-        private AppService _appService;
+        private AppService appService;
         public TMP_InputField inputText;
-        private string _userName;
+        private string userName;
         
         private const string QuizScene = "Quiz";
         private const string UserName = "userName";
         private const string StringEmpty = "";
+
         private void Start()
         {
             // PlayerPrefs.DeleteKey("userName");
-            _userName = PlayerPrefs.GetString(UserName);
-            _appService = gameObject.AddComponent<AppService>();
+            userName = PlayerPrefs.GetString(UserName);
+            appService = gameObject.AddComponent<AppService>();
             
             // GetGeneralParameter
-            _appService.GetGeneralParameterValue(GeneralParameterEnum.QuizTemplate, value =>
+            appService.GetGeneralParameterValue(GeneralParameterEnum.QuizTemplate, value =>
             {
                 try {
                     QuizNavigation.questionsTemplate = JsonConvert.DeserializeObject<QuestionsTemplate>(value);
@@ -35,7 +36,7 @@ namespace Login
                 }
             });
             
-            if (!string.IsNullOrEmpty(_userName))
+            if (!string.IsNullOrEmpty(userName))
             {
                 // SceneManager.LoadScene(QuizScene);
             }

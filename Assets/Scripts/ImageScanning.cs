@@ -5,28 +5,27 @@ using UnityEngine;
 
 public class ImageScanning : MonoBehaviour
 {
-    private short countEmergencyBackpack = 0;
-    private short countFirstAidKit = 0;
-    private short countColumn = 0;
-    private short countTable = 0;
-    private short countStair = 0;
-    private short countTelevision = 0;
-    private short countWindow = 0;
-    private short countMeetingPoint = 0;
+    private short countEmergencyBackpack;
+    private short countColumn;
+    private short countTable;
+    private short countStair;
+    private short countTelevision;
+    private short countWindow;
+    private short countMeetingPoint;
     public AudioSource audioSource;
     public List<AudioClip> duringList; 
     private Dictionary<string, AudioClip> duringDictionary;
-    
-    void Start()
+
+    private void Start()
     {
         duringDictionary = new Dictionary<string, AudioClip>();
-        foreach (AudioClip clip in duringList)
+        foreach (var clip in duringList)
         {
             duringDictionary[clip.name] = clip;
         }
     }
-    
-    void Update()
+
+    private void Update()
     {
         QuizNavigation.isInitialQuiz = false;
         DuringSceneEnding("Quiz");
@@ -35,9 +34,9 @@ public class ImageScanning : MonoBehaviour
     // ASIGNAR UN AUDIOSOURCE DE LA LISTA DE AUDIOCLIP
     private void SetAudioClipByName(string clipName)
     {
-        if (duringDictionary.ContainsKey(clipName))
+        if (duringDictionary.TryGetValue(clipName, out var value))
         {
-            audioSource.clip = duringDictionary[clipName];
+            audioSource.clip = value;
         }
     }
     
@@ -59,6 +58,7 @@ public class ImageScanning : MonoBehaviour
             countEmergencyBackpack++;   
         }
     }
+    
     public void IncreaseColumnCount()
     {
         if (countColumn == 0)
@@ -69,6 +69,7 @@ public class ImageScanning : MonoBehaviour
         SetAudioClipByName("During_SafeZone_1");
         audioSource.Play();
     }
+    
     public void IncreaseTableCount()
     {
         if (countTable == 0)
@@ -79,6 +80,7 @@ public class ImageScanning : MonoBehaviour
         SetAudioClipByName("During_SafeZone_2");
         audioSource.Play();
     }
+    
     public void IncreaseStairCount()
     {
         if (countStair == 0)
@@ -86,6 +88,7 @@ public class ImageScanning : MonoBehaviour
             countStair++;
         }
     }
+    
     public void IncreaseTelevisionCount()
     {
         if (countTelevision == 0)
@@ -96,6 +99,7 @@ public class ImageScanning : MonoBehaviour
         SetAudioClipByName("During_UnsafeZone_Television");
         audioSource.Play();
     }
+    
     public void IncreaseWindowCount()
     {
         if (countWindow == 0)
@@ -106,6 +110,7 @@ public class ImageScanning : MonoBehaviour
         SetAudioClipByName("During_UnsafeZone_Window");
         audioSource.Play();
     }
+    
     public void IncreaseMeetingPointCount()
     {
         if (countMeetingPoint == 0)
@@ -117,11 +122,11 @@ public class ImageScanning : MonoBehaviour
         audioSource.Play();
     }
 
-    private void DuringSceneEnding(string name)
+    private void DuringSceneEnding(string nameScene)
     {
         if (countTable >= 1 && countMeetingPoint >= 1 && countColumn >= 1)
         {
-            SceneManager.LoadScene(name);
+            SceneManager.LoadScene(nameScene);
         }
     }
 }
