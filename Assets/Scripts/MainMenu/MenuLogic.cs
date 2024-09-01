@@ -16,18 +16,11 @@ namespace MainMenu
         
         private void Start()
         {
-            if (isInitialQuiz)
-            {
-                activityBtn.image.color = SharedTools.ChangeColor("disable");
-                instructionBtn.image.color = SharedTools.ChangeColor("disable");
-                exitBtn.image.color = SharedTools.ChangeColor("disable");
-            }
-            else
-            {
-                activityBtn.image.color = SharedTools.ChangeColor("enable");
-                instructionBtn.image.color = SharedTools.ChangeColor("enable");
-                exitBtn.image.color = SharedTools.ChangeColor("enable");
-            }
+            var color = SharedTools.ChangeColor(isInitialQuiz ? SharedTools.Disable : SharedTools.Enable);
+            
+            activityBtn.image.color = color;
+            instructionBtn.image.color = color;
+            exitBtn.image.color = color;
             
             activityBtn.enabled = !isInitialQuiz;
             instructionBtn.enabled = !isInitialQuiz;

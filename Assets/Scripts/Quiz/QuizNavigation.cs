@@ -19,6 +19,7 @@ namespace Quiz
         // Components UI
         public static QuestionsTemplate questionsTemplate;
         public static bool isInitialQuiz;
+        
         public TextMeshProUGUI textMeshQuestion;
         public Button meshOption1Btn;
         public Button meshOption2Btn;
@@ -26,10 +27,13 @@ namespace Quiz
         public Button meshOption4Btn;
         public Button nextBtn;
         public Button prevBtn;
+        public TextMeshProUGUI validationMessage;
         private int index;
         
         private const string TextSendBtn = "Enviar";
         private const string MenuScene = "Menu";
+        // private const string PathOriginalBtn = "unity_builtin_extra";
+        private const string PathArrowBtn = "Pictures/arrow_right";
         // private const string Learning = "Learning";
         
         private void Start()
@@ -38,53 +42,75 @@ namespace Quiz
             appService = gameObject.AddComponent<AppService>();
             index = 0;
             
-            UpdateText();
+            UpdateTextQuestion();
             prevBtn.gameObject.SetActive(false);
         }
         
-        public void IncrementIndex()
+        public void NextQuestion()
         {
-            ++index;
-            if (index == 10)
+            if (string.IsNullOrEmpty(GetCurrentAnswer()))
             {
-                quizBeanSend.userName = PlayerPrefs.GetString("userName");
-                quizBeanSend.isFirstQuiz = isInitialQuiz;
-                SendQuiz(JsonUtility.ToJson(quizBeanSend));
-                
-                MenuLogic.isInitialQuiz = isInitialQuiz;
-                SceneManager.LoadScene(MenuScene);
+                validationMessage.text = "Por favor, responde la pregunta antes de continuar.";
                 return;
             }
-            else
+            
+            ++index;
+            
+            switch (index)
             {
-                UpdateText();
-                if (index == 9)
-                {
+                case 10:
+                    quizBeanSend.userName = PlayerPrefs.GetString("userName");
+                    quizBeanSend.isFirstQuiz = isInitialQuiz;
+                    SendQuiz(JsonUtility.ToJson(quizBeanSend));
+                
+                    MenuLogic.isInitialQuiz = isInitialQuiz;
+                    SceneManager.LoadScene(MenuScene);
+                    return;
+                case 9:
+                    // nextBtn.image.sprite = Resources.Load<Sprite>(PathOriginalBtn);
+                    nextBtn.image.sprite = null;
+                    nextBtn.image.type = Image.Type.Sliced;
+                    nextBtn.image.fillCenter = true;
+                    nextBtn.image.pixelsPerUnitMultiplier = 0.35f;
                     nextBtn.GetComponentInChildren<TextMeshProUGUI>().text = TextSendBtn;
-                    nextBtn.image.color = SharedTools.ChangeColor("send");
-                }
+                    var color = SharedTools.ChangeColor(SharedTools.Coral);
+                    nextBtn.image.color = color;
+                    var block = nextBtn.colors;
+                    block.disabledColor = color;
+                    block.pressedColor = color;
+                    block.normalColor = color;
+                    block.selectedColor = color;
+                    block.highlightedColor = Color.white;
+                    nextBtn.colors = block;
+                    break;
             }
-
+            
             if (index != 0)
             {
                 prevBtn.gameObject.SetActive(true);
             }
-
-            OrganizeAlternatives();
             
-            ResetButtonColor();
+            HighlightSelectedAnswer();
         }
         
-        public void DecrementIndex()
+        public void PrevQuestion()
         {
             --index;
-            UpdateText();
-            if (index == 0)
+
+            switch (index)
             {
-                prevBtn.gameObject.SetActive(false);
+                case 8:
+                    nextBtn.image.sprite = Resources.Load<Sprite>(PathArrowBtn);
+                    nextBtn.image.type = Image.Type.Simple;
+                    nextBtn.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
+                    break;
+                case 0:
+                    prevBtn.gameObject.SetActive(false);
+                    break;
             }
-            OrganizeAlternatives();
-            ResetButtonColor();
+
+            HighlightSelectedAnswer();
+            validationMessage.text = string.Empty;
         }
         
         public void SetOptionQuiz(Button optionBtn)
@@ -128,7 +154,8 @@ namespace Quiz
                     break;
             }
 
-            optionBtn.image.color = SharedTools.ChangeColor("mark");
+            optionBtn.image.color = SharedTools.ChangeColor(SharedTools.Mark);
+            validationMessage.text = string.Empty;
         }
         
         private void SendQuiz(string sendQuizBean)
@@ -143,7 +170,7 @@ namespace Quiz
             }
         }
         
-        private void UpdateText()
+        private void UpdateTextQuestion()
         {
             textMeshQuestion.text = questionsTemplate.questions[index].question;
             meshOption1Btn.GetComponentInChildren<TextMeshProUGUI>().text = questionsTemplate.questions[index].alternative1;
@@ -172,12 +199,53 @@ namespace Quiz
 
         private void ResetButtonColor()
         {
-            var color = SharedTools.ChangeColor("none");
+            var color = Color.white;
             meshOption1Btn.image.color = color;
             meshOption2Btn.image.color = color;
             meshOption3Btn.image.color = color;
             meshOption4Btn.image.color = color;
         }
+        
+        private void HighlightSelectedAnswer()
+        {
+            UpdateTextQuestion();
+            OrganizeAlternatives();
+            ResetButtonColor();
+            var currentAnswer = GetCurrentAnswer();
+            
+            if (string.IsNullOrEmpty(currentAnswer)) return;
+            
+            var selectedButton = GetButtonByText(currentAnswer);
+            if (selectedButton)
+            {
+                selectedButton.image.color = SharedTools.ChangeColor(SharedTools.Mark);
+            }
+        }
+        
+        private string GetCurrentAnswer()
+        {
+            return index switch
+            {
+                0 => quizBeanSend.quiz1,
+                1 => quizBeanSend.quiz2,
+                2 => quizBeanSend.quiz3,
+                3 => quizBeanSend.quiz4,
+                4 => quizBeanSend.quiz5,
+                5 => quizBeanSend.quiz6,
+                6 => quizBeanSend.quiz7,
+                7 => quizBeanSend.quiz8,
+                8 => quizBeanSend.quiz9,
+                9 => quizBeanSend.quiz10,
+                _ => null
+            };
+        }
 
+        private Button GetButtonByText(string text)
+        {
+            if (meshOption1Btn.GetComponentInChildren<TextMeshProUGUI>().text == text) return meshOption1Btn;
+            if (meshOption2Btn.GetComponentInChildren<TextMeshProUGUI>().text == text) return meshOption2Btn;
+            if (meshOption3Btn.GetComponentInChildren<TextMeshProUGUI>().text == text) return meshOption3Btn;
+            return meshOption4Btn.GetComponentInChildren<TextMeshProUGUI>().text == text ? meshOption4Btn : null;
+        }
     }
 }
