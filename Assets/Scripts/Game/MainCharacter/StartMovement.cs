@@ -61,7 +61,7 @@ namespace Game.MainCharacter
 		private bool audioFinishFlag;
 	
 		//Contador de imagenes escaneadas y texto de imagenes escaneadas
-		private short contScannedModels = 13;
+		private short contScannedModels = 7;
 		public TextMeshProUGUI scannedModelsText;
 		public GameObject rawImageGameObject;
 	
