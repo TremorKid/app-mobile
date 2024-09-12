@@ -626,10 +626,11 @@ namespace During
 				audioSource.Play();
 			}
 
-			if (audioSource.clip.name != "Scene 4.4" || currentTime != 0 || audioSource.isPlaying ||
-			    audioEnd != true) return;
-			guideMeshObject.SetActive(false);
-			nextButton.SetActive(true);
+			if (audioSource.clip.name == "Scene 4.4" && currentTime == 0 && !audioSource.isPlaying && audioEnd == true)
+			{
+				guideMeshObject.SetActive(false);
+				LoadScene("Quiz");
+			}
 
 		}
 

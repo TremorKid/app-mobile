@@ -327,7 +327,7 @@ namespace Game.MainCharacter
 				if (!audioFinishFlag) return;
 				questionCanvas.SetActive(true);
 				yesQuestionButtonDirectory["YesColumnBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte de <b>Columnas y Vigas</b>?";
+				questionText.text = "Te gustaría repasar de nuevo la parte de la <b>Columna</b>?";
 			}
 		}
 		
@@ -461,7 +461,7 @@ namespace Game.MainCharacter
 				if (!audioFinishFlag) return;
 				questionCanvas.SetActive(true);
 				yesQuestionButtonDirectory["YesBeamBtn"].SetActive(true);
-				questionText.text = "Te gustaría repasar de nuevo la parte del <b>Punto de Reunión</b>?";
+				questionText.text = "Te gustaría repasar de nuevo la parte de la <b>Viga</b>?";
 			}
 		}
 	
