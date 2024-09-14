@@ -47,14 +47,14 @@ namespace During
 		private short contInteractive;
 
 		//Contadores para saber cuantas veces se escaneo la imagen
-		private short contBeam;
-		private short contColumn;
-		private short contEmergencyBackpack;
-		private short contFirstAidKit;
-		private short contTelevision;
-		private short contTable;
-		private short contWindow;
-		private short contStair;
+		private short contBeam = 0;
+		private short contColumn = 0;
+		private short contEmergencyBackpack = 0;
+		private short contFirstAidKit = 0;
+		private short contTelevision = 0;
+		private short contTable = 0;
+		private short contWindow = 0;
+		private short contStair = 0;
 	
 		//Contador final
 		private short contEnd;

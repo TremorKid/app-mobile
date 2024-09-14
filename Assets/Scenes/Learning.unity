@@ -12368,14 +12368,14 @@ MonoBehaviour:
   - {fileID: 287535620}
   guideLearning:
   - {fileID: 8300000, guid: 9ef994840ba0fe7479ea1965eae1bd6b, type: 3}
-  - {fileID: 8300000, guid: d318d9286db2c85469af6f0f514fefe4, type: 3}
+  - {fileID: 8300000, guid: 66de7dec2b2d83d499970d709cb98c4b, type: 3}
   - {fileID: 8300000, guid: 97f6578e817f4a242a12b519415978f5, type: 3}
-  - {fileID: 8300000, guid: e75a7e2f90ea73e4ba4a6f04184e2c84, type: 3}
+  - {fileID: 8300000, guid: 6a03a495bd306b544b57c8295a158acd, type: 3}
   - {fileID: 8300000, guid: d84083c2babb0694582955b2e03fd725, type: 3}
   - {fileID: 8300000, guid: 73752b4ee48707f48bc6212a29533cea, type: 3}
   - {fileID: 8300000, guid: c85aa995d8855c74e9598a59dc38537c, type: 3}
   - {fileID: 8300000, guid: 4a0506bc8585b304e884515ad32599b5, type: 3}
-  - {fileID: 8300000, guid: 3dce308f1b5b6a84590f1e5de11e28fe, type: 3}
+  - {fileID: 8300000, guid: 3e97e27211d0f354397cf55f005ed4d4, type: 3}
   birdSongSoundEffectClip: {fileID: 8300000, guid: 9f46f5bf5d400914887803b4b85aa6ed, type: 3}
   modelList:
   - {fileID: 113428535}

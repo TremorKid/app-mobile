@@ -19,12 +19,8 @@ namespace MainMenu
             var color = SharedTools.ChangeColor(isInitialQuiz ? SharedTools.Disable : SharedTools.Enable);
             
             activityBtn.image.color = color;
-            instructionBtn.image.color = color;
-            exitBtn.image.color = color;
             
             activityBtn.enabled = !isInitialQuiz;
-            instructionBtn.enabled = !isInitialQuiz;
-            exitBtn.enabled = !isInitialQuiz;
         }
 
         public void Play(string nameScene)

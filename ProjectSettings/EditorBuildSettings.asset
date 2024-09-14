@@ -26,10 +26,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Before.unity
     guid: b4adae9813f3a164fa2c29e33a054b5f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Before 1.unity
     guid: b8d26fa9382365b458414c4aa095e615
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/During.unity
     guid: d20694dc458447949a741bd0d638e480
   - enabled: 0

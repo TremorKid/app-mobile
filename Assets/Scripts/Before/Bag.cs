@@ -75,7 +75,7 @@ public class Bag : MonoBehaviour
 	private short contEnd = 0;
 	
 	//Contador de imagenes escaneadas y texto de imagenes escaneadas
-	private short contScannedModels = 2;
+	private short contScannedModels = 1;
 	public TextMeshProUGUI scannedModelsText;
 	
 	//Condicional para saber si el audio termino
@@ -995,6 +995,11 @@ public class Bag : MonoBehaviour
 		{
 			pictureList[13].gameObject.SetActive(true);
 		}
+        
+        if (audioSource.clip.name == "Scene 2.4" && currentTime >= 38 && currentTime < 39)
+        {
+        	pictureList[13].gameObject.SetActive(false);
+        }
 		
 		//Pictures 3.1
 		if (audioSource.clip.name == "Scene 3.1" && currentTime >= 6 && currentTime < 7)
@@ -1013,9 +1018,14 @@ public class Bag : MonoBehaviour
 			pictureList[15].gameObject.SetActive(false);
 		}
         
-        if (audioSource.clip.name == "Scene 3.1" && currentTime >= 20 && currentTime < 21)
+        if (audioSource.clip.name == "Scene 3.1" && currentTime >= 19 && currentTime < 20)
         {
         	pictureList[16].gameObject.SetActive(true);
+        }
+        
+        if (audioSource.clip.name == "Scene 3.1" && currentTime >= 22 && currentTime < 23)
+        {
+        	pictureList[16].gameObject.SetActive(false);
         }
 		
 		//Audio Scene 2.4
