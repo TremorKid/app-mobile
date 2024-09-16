@@ -12371,9 +12371,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 66de7dec2b2d83d499970d709cb98c4b, type: 3}
   - {fileID: 8300000, guid: 97f6578e817f4a242a12b519415978f5, type: 3}
   - {fileID: 8300000, guid: 6a03a495bd306b544b57c8295a158acd, type: 3}
-  - {fileID: 8300000, guid: d84083c2babb0694582955b2e03fd725, type: 3}
-  - {fileID: 8300000, guid: 73752b4ee48707f48bc6212a29533cea, type: 3}
-  - {fileID: 8300000, guid: c85aa995d8855c74e9598a59dc38537c, type: 3}
+  - {fileID: 8300000, guid: c74eace23128c3b40bd7af6d60933f51, type: 3}
+  - {fileID: 8300000, guid: 5111b5fbb4acf7a45b91d2da4b38bd58, type: 3}
+  - {fileID: 8300000, guid: c9d94775363f46a44b4d106b63691ec7, type: 3}
   - {fileID: 8300000, guid: 4a0506bc8585b304e884515ad32599b5, type: 3}
   - {fileID: 8300000, guid: 3e97e27211d0f354397cf55f005ed4d4, type: 3}
   birdSongSoundEffectClip: {fileID: 8300000, guid: 9f46f5bf5d400914887803b4b85aa6ed, type: 3}

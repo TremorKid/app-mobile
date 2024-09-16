@@ -75,7 +75,7 @@ public class Bag : MonoBehaviour
 	private short contEnd = 0;
 	
 	//Contador de imagenes escaneadas y texto de imagenes escaneadas
-	private short contScannedModels = 1;
+	private short contScannedModels = 14;
 	public TextMeshProUGUI scannedModelsText;
 	
 	//Condicional para saber si el audio termino
