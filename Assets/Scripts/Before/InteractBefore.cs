@@ -8,24 +8,21 @@ namespace Before
     {
         public GameObject nextButton;
         //EmergencyBackpack counter
-        private short countStillBottledWater = 0;
-        private short countPortableRadio = 0;
-        private short countPolyesterRopes = 0;
-        private short countMultipurposeBlade = 0;
-        private short countFleeceBlanket = 0;
-        private short countFlashlight = 0;
-        private short countCannedFood = 0;
-        private short countLighter = 0;
-        private short countHandTowel = 0;
-        private short countAntibacterialGel = 0;
-        private short countToothBrush = 0;
+        private short countStillBottledWater;
+        private short countPortableRadio;
+        private short countPolyesterRopes;
+        private short countMultipurposeBlade;
+        private short countFlashlight;
+        private short countLighter;
+        private short countHandTowel;
+        private short countAntibacterialGel;
+        private short countToothBrush;
     
         //FirstAidKit count
-        private short countSterileGauze = 0;
-        private short countMask = 0;
-        private short countAntibiotics = 0;
-        private short countAlcohol = 0;
-        private short countAdhesiveTape = 0;
+        private short countSterileGauze;
+        private short countAntibiotics;
+        private short countAlcohol;
+        private short countAdhesiveTape;
         public AudioSource audioSource;
         public List<AudioClip> beforeNameList; 
         private Dictionary<string, AudioClip> beforeNameDictionary;
@@ -36,28 +33,29 @@ namespace Before
         //Imagenes del escaneo de mochila de botquín
         public List<GameObject> firstAidKitModelsList;
         private Dictionary<string, GameObject> firstAidKitModelsDictionary;
-        void Start()
+
+        private void Start()
         {
             beforeNameDictionary = new Dictionary<string, AudioClip>();
-            foreach (AudioClip clip in beforeNameList)
+            foreach (var clip in beforeNameList)
             {
                 beforeNameDictionary[clip.name] = clip;
             }
         
             emergencyBackpackModelsDictionary = new Dictionary<string, GameObject>();
-            foreach (GameObject aux in emergencyBackpackModelsList)
+            foreach (var aux in emergencyBackpackModelsList)
             {
                 emergencyBackpackModelsDictionary[aux.name] = aux;
             }
         
             firstAidKitModelsDictionary = new Dictionary<string, GameObject>();
-            foreach (GameObject aux in firstAidKitModelsList)
+            foreach (var aux in firstAidKitModelsList)
             {
                 firstAidKitModelsDictionary[aux.name] = aux;
             }
         }
-    
-        void Update()
+
+        private void Update()
         {
             BeforeEnding();
         }
@@ -65,9 +63,9 @@ namespace Before
         // ASIGNAR UN AUDIOSOURCE DE LA LISTA DE AUDIOCLIP
         private void SetAudioClipByName(string clipName)
         {
-            if (beforeNameDictionary.ContainsKey(clipName))
+            if (beforeNameDictionary.TryGetValue(clipName, out var value))
             {
-                audioSource.clip = beforeNameDictionary[clipName];
+                audioSource.clip = value;
             }
         }
     
@@ -106,9 +104,6 @@ namespace Before
         }
         public void IncreaseFleeceBlanketCount()
         {
-            countFleeceBlanket++;
-        
-        
             SetAudioClipByName("guide_fleeceBlanket_name");
             audioSource.Play();
         }
@@ -122,8 +117,6 @@ namespace Before
         }
         public void IncreaseCannedFoodCount()
         {
-            countCannedFood++;
-        
             SetAudioClipByName("guide_cannedFood_name");
             audioSource.Play();
         }
@@ -170,9 +163,6 @@ namespace Before
         }
         public void IncreaseMaskCount()
         {
-            countMask++;
-        
-        
             SetAudioClipByName("guide_mask_name");
             audioSource.Play();
         }
@@ -225,9 +215,9 @@ namespace Before
                 nextButton.SetActive(true);
             }
         }
-        public void LoadScene(string name)
+        public void LoadScene(string nameScene)
         {
-            SceneManager.LoadScene(name);
+            SceneManager.LoadScene(nameScene);
         }
     }
 }

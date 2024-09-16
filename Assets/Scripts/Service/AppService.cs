@@ -9,8 +9,8 @@ namespace Service
     public class AppService : MonoBehaviour
     {
             
-        private readonly string _quizUrl = Host.BaseUrl + "/service/quiz/";
-        private readonly string _generalParameterUrl = Host.BaseUrl + "/service/general-parameter/";
+        private readonly string quizUrl = Host.BaseUrl + "/service/quiz/";
+        private readonly string generalParameterUrl = Host.BaseUrl + "/service/general-parameter/";
         
         public void SendQuiz(string quizBeanJson)
         {
@@ -19,7 +19,7 @@ namespace Service
         
         private IEnumerator SendQuizCoroutine(string quizBeanJson)
         {
-            using var webRequest = new UnityWebRequest(_quizUrl, "POST");
+            using var webRequest = new UnityWebRequest(quizUrl, "POST");
         
             var bodyRaw = System.Text.Encoding.UTF8.GetBytes(quizBeanJson);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -50,7 +50,7 @@ namespace Service
         
         private IEnumerator GetGeneralParameterCoroutine(string code, Action<string> callback)
         {
-            using var webRequest = new UnityWebRequest(_generalParameterUrl + code, "GET");
+            using var webRequest = new UnityWebRequest(generalParameterUrl + code, "GET");
             webRequest.downloadHandler = new DownloadHandlerBuffer();
                 
             yield return webRequest.SendWebRequest();

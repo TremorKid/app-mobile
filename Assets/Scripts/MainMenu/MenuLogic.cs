@@ -12,28 +12,19 @@ namespace MainMenu
         public Button exitBtn;
         
         
-        public static bool IsInitialQuiz;
+        public static bool isInitialQuiz;
         
         private void Start()
         {
-            if (IsInitialQuiz)
-            {
-                activityBtn.enabled = false;
-                instructionBtn.enabled = false;
-                exitBtn.enabled = false;
-                activityBtn.image.color = SharedTools.ChangeColor("disable");
-                instructionBtn.image.color = SharedTools.ChangeColor("disable");
-                exitBtn.image.color = SharedTools.ChangeColor("disable");
-            }
-            else
-            {
-                activityBtn.enabled = true;
-                instructionBtn.enabled = true;
-                exitBtn.enabled = true;
-                activityBtn.image.color = SharedTools.ChangeColor("enable");
-                instructionBtn.image.color = SharedTools.ChangeColor("enable");
-                exitBtn.image.color = SharedTools.ChangeColor("enable");
-            }
+            var color = SharedTools.ChangeColor(isInitialQuiz ? SharedTools.Disable : SharedTools.Enable);
+            
+            activityBtn.image.color = color;
+            instructionBtn.image.color = color;
+            exitBtn.image.color = color;
+            
+            activityBtn.enabled = !isInitialQuiz;
+            instructionBtn.enabled = !isInitialQuiz;
+            exitBtn.enabled = !isInitialQuiz;
         }
 
         public void Play(string nameScene)
