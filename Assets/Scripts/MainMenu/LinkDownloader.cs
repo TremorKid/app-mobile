@@ -4,7 +4,7 @@ namespace MainMenu
 {
     public class LinkDownloader : MonoBehaviour
     {
-        private const string Link = "https://drive.google.com/uc?export=download&id=1PEB2yxpODUfpNypoN6kXrxRNfmQFgNHc";
+        private const string Link = "https://drive.google.com/file/d/1I8uKuggBOWleD4Ibd6DlfxeVcNsnUNlX/view?usp=sharing";
 
         public void OpenDownloadLink()
         {
