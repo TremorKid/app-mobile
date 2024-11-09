@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Quiz;
+using TMPro;
 
 namespace During
 {
@@ -74,9 +76,21 @@ namespace During
 	
 		//Imagen de conteo
 		public GameObject rawImageGameObject;
+        
+        public Button audioButton;
+        public AudioClip activitySound;
+        public AudioClip guideSound;
+        bool audioBackgroundActive = true;
+        private short audioCont = 0;
+        public AudioSource backgroundAudio;
+        
+        public TextMeshProUGUI activityText;
 
 		public void Start()
 		{
+            backgroundAudio.clip = guideSound;
+            backgroundAudio.Play();
+                    
 			audioEnd = false;
 
 			//Sound
@@ -110,6 +124,17 @@ namespace During
 
 		private void Update()
 		{
+            if (audioSource.isPlaying)
+            {
+                // Baja el volumen del audio de fondo
+                backgroundAudio.volume = 0.02f;
+            }
+            else
+            {
+                // Restaura el volumen del audio de fondo
+                backgroundAudio.volume = 0.3f;
+            }
+                    
 			ControlAnimationPartameters();
 			FinishLearningScene();
 		}
@@ -170,6 +195,14 @@ namespace During
 				scannedModelsText.gameObject.SetActive(true);
 				rawImageGameObject.gameObject.SetActive(true);
 				guideMeshObject.SetActive(false);
+                if (audioCont == 0)
+                {
+                    backgroundAudio.clip = activitySound;
+                    backgroundAudio.Play();
+                    audioCont++;
+                }
+                
+                activityText.gameObject.SetActive(true);
 			}
 
 			if (scannedModelsText.gameObject.activeSelf)
@@ -617,6 +650,9 @@ namespace During
 				contEnd = 1;
 				scannedModelsText.gameObject.SetActive(false);
 				rawImageGameObject.gameObject.SetActive(false);
+                backgroundAudio.clip = guideSound;
+                backgroundAudio.Play();
+                activityText.gameObject.SetActive(false);
 			}
 
 			if (!audioSource.isPlaying && contEnd == 2 && audioEnd == false)
@@ -636,7 +672,23 @@ namespace During
 
 		public void LoadScene(string nameScene)
 		{
+            QuizNavigation.isInitialQuiz = false;
 			SceneManager.LoadScene(nameScene);
 		}
+        
+        public void AudioBackground()
+        {
+            audioBackgroundActive = !audioBackgroundActive;
+            if (audioBackgroundActive == false)
+            {
+                audioButton.GetComponent<Image>().sprite = Resources.Load<Sprite>("Pictures/Mute");
+                backgroundAudio.Pause();
+            }
+            else
+            {
+                audioButton.GetComponent<Image>().sprite = Resources.Load<Sprite>("Pictures/Audio");
+                backgroundAudio.Play();
+            }          
+        }
 	}
 }

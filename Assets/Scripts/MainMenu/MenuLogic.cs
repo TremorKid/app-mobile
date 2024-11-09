@@ -11,8 +11,10 @@ namespace MainMenu
         public Button instructionBtn;
         public Button exitBtn;
         
-        
+        public static bool instrucionDownload = true;
         public static bool isInitialQuiz;
+        public GameObject mainMenuPanel;
+        public GameObject instructionDownloadPanel;
         
         private void Start()
         {
@@ -21,6 +23,11 @@ namespace MainMenu
             activityBtn.image.color = color;
             
             activityBtn.enabled = !isInitialQuiz;
+
+            if (instrucionDownload == false){
+                mainMenuPanel.SetActive(true);
+                instructionDownloadPanel.SetActive(false);
+            }
         }
 
         public void Play(string nameScene)
@@ -32,6 +39,12 @@ namespace MainMenu
         {
             Application.Quit();
             Debug.Log("Player has quit the game");
+        }
+
+        public void DownloadButton(){
+            instrucionDownload = false;
+            mainMenuPanel.SetActive(true);
+            instructionDownloadPanel.SetActive(false);
         }
     }   
 }
