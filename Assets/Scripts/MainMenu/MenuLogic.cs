@@ -11,28 +11,22 @@ namespace MainMenu
         public Button instructionBtn;
         public Button exitBtn;
         
-        
-        public static bool IsInitialQuiz;
+        public static bool instrucionDownload = true;
+        public static bool isInitialQuiz;
+        public GameObject mainMenuPanel;
+        public GameObject instructionDownloadPanel;
         
         private void Start()
         {
-            if (IsInitialQuiz)
-            {
-                activityBtn.enabled = false;
-                instructionBtn.enabled = false;
-                exitBtn.enabled = false;
-                activityBtn.image.color = SharedTools.ChangeColor("disable");
-                instructionBtn.image.color = SharedTools.ChangeColor("disable");
-                exitBtn.image.color = SharedTools.ChangeColor("disable");
-            }
-            else
-            {
-                activityBtn.enabled = true;
-                instructionBtn.enabled = true;
-                exitBtn.enabled = true;
-                activityBtn.image.color = SharedTools.ChangeColor("enable");
-                instructionBtn.image.color = SharedTools.ChangeColor("enable");
-                exitBtn.image.color = SharedTools.ChangeColor("enable");
+            var color = SharedTools.ChangeColor(isInitialQuiz ? SharedTools.Disable : SharedTools.Enable);
+            
+            activityBtn.image.color = color;
+            
+            activityBtn.enabled = !isInitialQuiz;
+
+            if (instrucionDownload == false){
+                mainMenuPanel.SetActive(true);
+                instructionDownloadPanel.SetActive(false);
             }
         }
 
@@ -45,6 +39,12 @@ namespace MainMenu
         {
             Application.Quit();
             Debug.Log("Player has quit the game");
+        }
+
+        public void DownloadButton(){
+            instrucionDownload = false;
+            mainMenuPanel.SetActive(true);
+            instructionDownloadPanel.SetActive(false);
         }
     }   
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,21 +32,21 @@ namespace Before
 		private Dictionary<string, GameObject> modelDictionary;
 		
 		//Variables para el control de audio
-		private float currentTime = 0f;
-		private short contAudioReproduce = 0;
-		private short contInteractive = 0;
+		private float currentTime;
+		private short contAudioReproduce;
+		private short contInteractive;
 		
-		//Condicional para saber si el audio termino
+		// Condicional para saber si el audio termino
 		private bool audioFinishFlag;
-		
-		void Start()
+
+		private void Start()
 		{
 			//Sound
 			audioSource = GetComponent<AudioSource>();
-			InvokeRepeating("CheckAudioTime", 0f, 1f);
+			InvokeRepeating(nameof(CheckAudioTime), 0f, 1f);
 
 			guideLearningImagesDictionary = new Dictionary<string, AudioClip>();
-			foreach (AudioClip clip in guideLearning)
+			foreach (var clip in guideLearning)
 			{
 				guideLearningImagesDictionary[clip.name] = clip;
 			}
@@ -56,27 +57,25 @@ namespace Before
 			
 			//Model
 			modelDictionary = new Dictionary<string, GameObject>();
-			foreach (GameObject model in modelList)
+			foreach (var model in modelList.Where(model => model != null))
 			{
-				if (model != null)
-				{
-					modelDictionary[model.name] = model;
-				}
+				modelDictionary[model.name] = model;
 			}
 		}
 
-		void Update()
+		private void Update()
 		{
 			ControlAnimationPartameters();
 		}
 
-		void InitialMovementClipPlay()
+		private void InitialMovementClipPlay()
 		{
 			audioSource.clip = birdSongSoundEffectClip;
 			audioSource.Play();
 		}
 
 		//FUNCIÓN DE CONTROL DE ANIMACIONES Y AUDIO PARA LA REPRODUCCIÓN DE AUDIO Y ANIMACIONES EN LA ESCENA
+		// ReSharper disable Unity.PerformanceAnalysis
 		void ControlAnimationPartameters()
 		{
 			//Animation StartMovement Start
@@ -104,53 +103,49 @@ namespace Before
 				}
 			}
 
-			if (contAudioReproduce == 1)
+			if (contAudioReproduce != 1) return;
+			//CUANDO EL AUDIO INICIAL DEL GUIA TERMINA, DA PASO A LA INTERACTIVIDAD DE LAS IMAGENES, POR ELLO SE ABELITIA CON SETACTIVE
+			if (audioSource.clip.name != "guide_scene3_emergencyBackpack" || currentTime != 0 ||
+			    audioSource.isPlaying) return;
+			//gameObject.SetActive(false);
+			foreach (var aux in modelDictionary)
 			{
-				//CUANDO EL AUDIO INICIAL DEL GUIA TERMINA, DA PASO A LA INTERACTIVIDAD DE LAS IMAGENES, POR ELLO SE ABELITIA CON SETACTIVE
-				if (audioSource.clip.name == "guide_scene3_emergencyBackpack" && currentTime == 0 && !audioSource.isPlaying)
-				{
-					//gameObject.SetActive(false);
-					foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
-					{
-						aux.Value.SetActive(true);
-					}
-
-					guideMeshObject.SetActive(false);
-				}
-				
-				//CUANDO ESCANEA LA IMAGEN DE LA COLUMNA, Y TERMINA SU AUDIO, SE HABILITA TODOS LOS MODELOS
-				//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
+				aux.Value.SetActive(true);
 			}
-			
+
+			guideMeshObject.SetActive(false);
+
+			//CUANDO ESCANEA LA IMAGEN DE LA COLUMNA, Y TERMINA SU AUDIO, SE HABILITA TODOS LOS MODELOS
+			//ESTO PARA SEGUIR ESCANEANDO UNO POR UNO, Y, ASÍ, NO TENER INTERFERENCIA SI DE CASUALIDAD SE ESCANEA 2 MODELOS
+
 		}
 
 		//FUNCIÓN PARA CONTROLAR EL TIEMPO DE CADA AUDIO Y COLOCAR LOS BOTONES AZULES DE INTERACTIVIDAD
-		void CheckAudioTime()
+		// ReSharper disable Unity.PerformanceAnalysis
+		private void CheckAudioTime()
 		{
 			currentTime = audioSource.time;
 
 			Debug.Log(currentTime);
 
-			if (currentTime >= 7 && currentTime < 8 && contInteractive == 0)
+			switch (currentTime)
 			{
-				audioSource.Pause();
-				buttonInteraction[0].gameObject.SetActive(true);
-				contInteractive++;
+				case >= 7 and < 8 when contInteractive == 0:
+					audioSource.Pause();
+					buttonInteraction[0].gameObject.SetActive(true);
+					contInteractive++;
+					break;
+				case >= 30 and < 31 when contInteractive == 1:
+					audioSource.Pause();
+					buttonInteraction[1].gameObject.SetActive(true);
+					contInteractive++;
+					break;
 			}
 
-			if (currentTime >= 30 && currentTime < 31 && contInteractive == 1)
-			{
-				audioSource.Pause();
-				buttonInteraction[1].gameObject.SetActive(true);
-				contInteractive++;
-			}
-
-			if (currentTime >= 55 && currentTime < 56 && contInteractive == 2)
-			{
-				audioSource.Pause();
-				buttonInteraction[2].gameObject.SetActive(true);
-				contInteractive++;
-			}
+			if (!(currentTime >= 55) || !(currentTime < 56) || contInteractive != 2) return;
+			audioSource.Pause();
+			buttonInteraction[2].gameObject.SetActive(true);
+			contInteractive++;
 
 		}
 
@@ -160,11 +155,11 @@ namespace Before
 		}
 
 		// ASIGNAR UN AUDIOSOURCE DE LA LISTA DE AUDIOCLIP DEL GUIA
-		public void SetAudioClipByName(string clipName)
+		private void SetAudioClipByName(string clipName)
 		{
-			if (guideLearningImagesDictionary.ContainsKey(clipName))
+			if (guideLearningImagesDictionary.TryGetValue(clipName, out var value))
 			{
-				audioSource.clip = guideLearningImagesDictionary[clipName];
+				audioSource.clip = value;
 				Debug.Log($"AudioClip '{clipName}' asignado al AudioSource.");
 			}
 			else
@@ -176,7 +171,7 @@ namespace Before
 		// HABILITAR LA FUNCIÓN DE TODOS LOS MODELOS DE LAS IMAGENES PARA ESCANEAR
 		public void SetActiveModel(bool flag, string nameModel)
 		{
-			foreach (KeyValuePair<string, GameObject> aux in modelDictionary)
+			foreach (var aux in modelDictionary)
 			{ 
 				aux.Value.SetActive(true);
 			}
@@ -184,9 +179,9 @@ namespace Before
 			modelDictionary[nameModel].SetActive(flag);
 		}
 		
-		public void LoadScene(string name)
+		public void LoadScene(string nameScene)
 		{
-			SceneManager.LoadScene(name);
+			SceneManager.LoadScene(nameScene);
 		}
 	}
 }

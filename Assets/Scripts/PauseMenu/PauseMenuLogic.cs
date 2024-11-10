@@ -18,7 +18,7 @@ namespace PauseMenu
         public void BackMainMenu()
         {
             Resume();
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(2);
         }
     }
 }

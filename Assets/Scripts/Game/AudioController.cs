@@ -10,7 +10,7 @@ namespace Game
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
+            if (!audioSource)
             {
                 Debug.LogError("No AudioSource component found on this GameObject.");
             }
