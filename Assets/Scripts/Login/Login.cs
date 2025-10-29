@@ -1,12 +1,11 @@
 using System;
-using Newtonsoft.Json;
+using UnityEngine;
 using Quiz;
 using Quiz.Enum;
 using Quiz.Model;
 using Service;
 using Shared;
 using TMPro;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -30,7 +29,7 @@ namespace Login
             appService.GetGeneralParameterValue(GeneralParameterEnum.QuizTemplate, value =>
             {
                 try {
-                    QuizNavigation.questionsTemplate = JsonConvert.DeserializeObject<QuestionsTemplate>(value);
+                    QuizNavigation.questionsTemplate = JsonUtility.FromJson<QuestionsTemplate>(value);
                 } catch (Exception e) {
                     Debug.LogError("Error al deserializar JSON: " + e.Message);
                 }
